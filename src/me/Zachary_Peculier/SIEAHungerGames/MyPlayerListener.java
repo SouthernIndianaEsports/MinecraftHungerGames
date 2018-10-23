@@ -1,5 +1,6 @@
 package me.Zachary_Peculier.SIEAHungerGames;
 
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -14,8 +15,8 @@ public class MyPlayerListener implements Listener
 {
     public static core plugin;
     int players;
-    List<String> alive = new ArrayList<String>();
-    List<String> dead = new ArrayList<String>();
+    ArrayList<String> alive = new ArrayList<String>();
+    ArrayList<String> dead = new ArrayList<String>();
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event)
