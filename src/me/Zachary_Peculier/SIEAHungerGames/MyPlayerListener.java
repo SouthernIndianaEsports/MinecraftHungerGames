@@ -15,8 +15,8 @@ public class MyPlayerListener implements Listener
 {
     public static core plugin;
     int players;
-    ArrayList<String> alive = new ArrayList<String>();
-    ArrayList<String> dead = new ArrayList<String>();
+    ArrayList<Player> alive = new ArrayList<Player>();
+    ArrayList<Player> dead = new ArrayList<Player>();
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event)
@@ -24,22 +24,22 @@ public class MyPlayerListener implements Listener
         Player player = event.getEntity();
         String player_name = player.getName();
 
-        if (!alive.contains(player_name)) // player is not participating in the game, ignore their death
+        if (!alive.contains(player)) // player is not participating in the game, ignore their death
         {
-                return;
+            return;
         }
 
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
         player.setGameMode(GameMode.SPECTATOR);
         players--;
-        alive.remove(player_name);
-        dead.add(player_name);
+        alive.remove(player);
+        dead.add(player);
 
         if (players == 1)
         {
             for (int i = 0; i < 10; i++)
             {
-                Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS " + alive.get(0) + "!!!!");
+                Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS " + alive.get(0).getName() + "!!!!");
             }
         }
         else
@@ -59,21 +59,29 @@ public class MyPlayerListener implements Listener
     public void onPlayerLeave(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-        String player_name = player.getName();
-        event.setQuitMessage(ChatColor.GREEN + player_name + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
-        if (alive.contains(player_name))
+
+        event.setQuitMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
+
+        if (alive.contains(player))
         {
-            alive.remove(player_name);
+            alive.remove(player);
         }
 
-        if (dead.contains(player_name))
+        if (dead.contains(player))
         {
-            dead.remove(player_name);
+            dead.remove(player);
         }
     }
 
-    public void InstantiateTrib(String playerName)
+    public void InstantiateTrib(Player player)
     {
-        alive.add(playerName);
+        alive.add(player);
+        player.setGameMode(GameMode.ADVENTURE);
+    }
+
+    public void startGame() {
+        for (int i = 0; i < alive.size(); i++) {
+            alive.get(i).setGameMode(GameMode.SURVIVAL);
+        }
     }
 }

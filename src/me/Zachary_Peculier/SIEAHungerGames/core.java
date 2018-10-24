@@ -35,12 +35,16 @@ public class core extends JavaPlugin
         Player player = (Player) sender;
         if (commandLabel.equalsIgnoreCase("join"))
         {
-            mpl.InstantiateTrib(player.getName());
+            mpl.InstantiateTrib(player);
             player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
             tributes++;
         }
         else if (commandLabel.equalsIgnoreCase("start"))
         {
+            if (tributes < 2) {
+                player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
+            }
+
             if (args.length != 1)
             {
                 player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
@@ -95,12 +99,13 @@ public class core extends JavaPlugin
                                         }
                                     }
                                 }
-                                }
+                            }
                             else
                             {
                                 Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Go!");
                                 Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
                                 Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
+                                mpl.startGame();
                             }
                             timer--;
                         }
