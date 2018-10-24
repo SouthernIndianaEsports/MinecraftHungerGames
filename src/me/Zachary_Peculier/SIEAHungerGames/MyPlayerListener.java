@@ -1,6 +1,7 @@
 package me.Zachary_Peculier.SIEAHungerGames;
 
 import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -79,8 +80,10 @@ public class MyPlayerListener implements Listener
         player.setGameMode(GameMode.ADVENTURE);
     }
 
-    public void startGame() {
-        for (int i = 0; i < alive.size(); i++) {
+    public void startGame()
+    {
+        for (int i = 0; i < alive.size(); i++)
+        {
             alive.get(i).setGameMode(GameMode.SURVIVAL);
         }
     }
