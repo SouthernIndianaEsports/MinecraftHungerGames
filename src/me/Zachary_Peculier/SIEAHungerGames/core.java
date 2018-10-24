@@ -1,7 +1,5 @@
 package me.Zachary_Peculier.SIEAHungerGames;
-
 import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-
 public class core extends JavaPlugin
 {
     public static core plugin;
@@ -17,7 +14,6 @@ public class core extends JavaPlugin
     public int tributes;
     public final java.util.logging.Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
-
     @Override
     public void onEnable()
     {
