@@ -23,28 +23,26 @@ public class core extends JavaPlugin
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + "has been activated!");
     }
-
     @Override
     public void onDisable()
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + "has been deactivated!");
     }
-
     @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         Player player = (Player) sender;
-        if (commandLabel.equalsIgnoreCase("value")) {
-            if (args.length != 1) {
-                player.sendMessage(ChatColor.RED + "Usage: /value <players>");
-            } else {
-                tributes = Integer.parseInt(args[0]);
-                mpl.InstantiateTribs(tributes);
-            }
-        } else if (commandLabel.equalsIgnoreCase("start")) {
-            if (args.length != 1) {
+        if (commandLabel.equalsIgnoreCase("join")) 
+        {
+            mpl.InstantiateTrib(player.getName());
+        } 
+        else if (commandLabel.equalsIgnoreCase("start")) {
+            if (args.length != 1) 
+            {
                 player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
-            } else {
+            } 
+            else 
+            {
                 int time = Integer.parseInt(args[0]);
                 if (time > 0) {
                     int seconds = time % 60;
@@ -52,27 +50,31 @@ public class core extends JavaPlugin
                     player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
                     this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable(){
                             int timer = time;
-
-                            public void run() {
-                                if (timer == -1) {
+                            public void run() 
+                            {
+                                if (timer == -1) 
+                                {
                                     return;
                                 }
 
-                                if (timer != 0) {
+                                if (timer != 0) 
+                                {
                                     Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[Server] " + timer);
                                     timer--;
-                                } else {
+                                } 
+                                else 
+                                {
                                     Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[Server] Go!");
-                                    Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE
-                                                            + "[Server] Good luck, and may the odds be ever in your favor");
-                                    Bukkit.broadcastMessage(ChatColor.AQUA + "There are " + ChatColor.YELLOW + tributes
-                                                            + ChatColor.AQUA + " paricipants");
+                                    Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[Server] Good luck, and may the odds be ever in your favor");
+                                    Bukkit.broadcastMessage(ChatColor.AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.AQUA + " paricipants");
                                     timer--;
                                 }
                             }
                         }, 0L, 20L);
                     return true;
-                } else {
+                } 
+                else 
+                {
                     player.sendMessage(ChatColor.RED + "Please enter a whole number");
                 }
             }

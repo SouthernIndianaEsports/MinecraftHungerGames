@@ -23,17 +23,22 @@ public class MyPlayerListener implements Listener
     {
         Player player = event.getEntity();
         String player_name = player.getName();
-
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.AQUA + " has been killed!");
         players--;
-
         player.setGameMode(GameMode.SPECTATOR);
         alive.remove(player_name);
         dead.add(player_name);
 
-        if (players == 1) {
-            Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS " + player_name + "!!!!");
-        } else {
+        if (players == 1) 
+        {
+           
+            for(int i = 0; i < 10; i++)
+            {
+        	Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS " + alive.get(0) + "!!!!");
+            }
+        } 
+        else 
+        {
             Bukkit.broadcastMessage(ChatColor.AQUA + "There are " + ChatColor.YELLOW + players + ChatColor.AQUA + " players remaining");
         }
     }
@@ -43,7 +48,6 @@ public class MyPlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
-        alive.add(player.getName());
     }
 
     @EventHandler
@@ -63,9 +67,8 @@ public class MyPlayerListener implements Listener
         }
     }
 
-    @SuppressWarnings("unused")
-    public void InstantiateTribs(int tributes)
+    public void InstantiateTrib(String playerName)
     {
-        players = tributes;
+        alive.add(playerName);
     }
 }
