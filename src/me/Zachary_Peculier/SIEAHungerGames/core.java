@@ -23,13 +23,11 @@ public class core extends JavaPlugin
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + "has been activated!");
     }
-
     @Override
     public void onDisable()
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + "has been deactivated!");
     }
-
     @SuppressWarnings("deprecation")
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
