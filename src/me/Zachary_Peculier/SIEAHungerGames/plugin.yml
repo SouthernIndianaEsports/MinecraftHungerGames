@@ -1,7 +1,10 @@
 name: SIEAHungerGames
 main: me.Zachary_Peculier.SIEAHungerGames.core
-version: 1.0
+version: 1.1
 commands:
   start:
     description: countdown
     usage: /<command> <args>
+  join:
+    description: joins game
+    usage: /<command>

@@ -25,7 +25,7 @@ public class MyPlayerListener implements Listener
 	{
 	    return;
 	}
-	event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.AQUA + " has been killed!");
+	event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
 	player.setGameMode(GameMode.SPECTATOR);
 	players--;
 	alive.remove(player_name);
@@ -40,7 +40,7 @@ public class MyPlayerListener implements Listener
 	}
 	else
 	{
-	    Bukkit.broadcastMessage(ChatColor.AQUA + "There are " + ChatColor.YELLOW + players + ChatColor.AQUA + " players remaining");
+	    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + players + ChatColor.DARK_AQUA + " players remaining");
 	}
     }
     @EventHandler
