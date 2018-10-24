@@ -23,21 +23,27 @@ public class MyPlayerListener implements Listener
     {
         Player player = event.getEntity();
         String player_name = player.getName();
+
+        if (!alive.contains(player_name)) { //player is not participating in the game, ignore their death
+            return;
+        }
+
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.AQUA + " has been killed!");
-        players--;
+
         player.setGameMode(GameMode.SPECTATOR);
+
+        players--;
         alive.remove(player_name);
         dead.add(player_name);
 
-        if (players == 1) 
+        if (players == 1)
         {
-           
             for(int i = 0; i < 10; i++)
             {
-        	Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS " + alive.get(0) + "!!!!");
+                Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS " + alive.get(0) + "!!!!");
             }
-        } 
-        else 
+        }
+        else
         {
             Bukkit.broadcastMessage(ChatColor.AQUA + "There are " + ChatColor.YELLOW + players + ChatColor.AQUA + " players remaining");
         }
