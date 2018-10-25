@@ -25,15 +25,11 @@ public class MyPlayerListener implements Listener
         String player_name = player.getName();
 
         if (!alive.contains(player))
-                                  
         {
             return;
         }
-
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
-        
         player.setGameMode(GameMode.SPECTATOR);
-
         alive.remove(player);
         dead.add(player);
 
@@ -81,11 +77,28 @@ public class MyPlayerListener implements Listener
         alive.add(player);
     }
 
+    public void RemoveTrib(Player player)
+    {
+        alive.remove(player);
+
+    }
+
     public void startGame()
     {
         for (int i = 0; i < alive.size(); i++)
         {
             alive.get(i).setGameMode(GameMode.SURVIVAL);
         }
+    }
+
+    public void listPlayers(Player player)
+    {
+        for (int i = 0; i == alive.size(); i++)
+        {
+
+            player.sendMessage(alive.get(i).getName());
+        }
+        player.sendMessage(ChatColor.YELLOW + "" + (alive.size() + 1) + ChatColor.DARK_AQUA + " remain");
+
     }
 }

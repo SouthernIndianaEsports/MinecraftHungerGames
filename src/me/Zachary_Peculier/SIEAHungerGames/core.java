@@ -39,6 +39,17 @@ public class core extends JavaPlugin
             mpl.InstantiateTrib(player);
             player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
             tributes++;
+            player.sendMessage(ChatColor.YELLOW + "[" + tributes + "]");
+        }
+        else if (commandLabel.equalsIgnoreCase("leave"))
+        {
+            mpl.RemoveTrib(player);
+            player.sendMessage(ChatColor.DARK_AQUA + "You have left the game!");
+            tributes--;
+        }
+        else if (commandLabel.equalsIgnoreCase("who"))
+        {
+            mpl.listPlayers(player);
         }
         else if (commandLabel.equalsIgnoreCase("start"))
         {
@@ -46,7 +57,6 @@ public class core extends JavaPlugin
             if (tributes < 2)
             {
                 player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
-                return false;
             }
 
             if (args.length != 1)
