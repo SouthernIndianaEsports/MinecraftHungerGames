@@ -24,14 +24,16 @@ public class MyPlayerListener implements Listener
         Player player = event.getEntity();
         String player_name = player.getName();
 
-        if (!alive.contains(player)) // player is not participating in the game, ignore their death
+        if (!alive.contains(player))
+                                  
         {
             return;
         }
 
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
-        player.setGameMode(GameMode.SPECTATOR);
         
+        player.setGameMode(GameMode.SPECTATOR);
+
         alive.remove(player);
         dead.add(player);
 
@@ -53,6 +55,7 @@ public class MyPlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
+        player.setGameMode(GameMode.ADVENTURE);
     }
 
     @EventHandler
@@ -76,7 +79,6 @@ public class MyPlayerListener implements Listener
     public void InstantiateTrib(Player player)
     {
         alive.add(player);
-        player.setGameMode(GameMode.ADVENTURE);
     }
 
     public void startGame()
