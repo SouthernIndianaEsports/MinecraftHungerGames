@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class MyPlayerListener implements Listener
 {
     public static core plugin;
-    int players;
     ArrayList<Player> alive = new ArrayList<Player>();
     ArrayList<Player> dead = new ArrayList<Player>();
 
@@ -32,11 +31,11 @@ public class MyPlayerListener implements Listener
 
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
         player.setGameMode(GameMode.SPECTATOR);
-        players--;
+        
         alive.remove(player);
         dead.add(player);
 
-        if (players == 1)
+        if (alive.size() == 1)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -45,7 +44,7 @@ public class MyPlayerListener implements Listener
         }
         else
         {
-            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + players + ChatColor.DARK_AQUA + " players remaining");
+            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining");
         }
     }
 
