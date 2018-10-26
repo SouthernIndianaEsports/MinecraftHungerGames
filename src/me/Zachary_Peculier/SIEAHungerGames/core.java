@@ -34,97 +34,99 @@ public class core extends JavaPlugin
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         Player player = (Player) sender;
-        if (commandLabel.equalsIgnoreCase("join"))
-        {
-            mpl.InstantiateTrib(player);
-            player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
-            tributes++;
-            player.sendMessage(ChatColor.YELLOW + "[" + tributes + "]");
-        }
-        else if (commandLabel.equalsIgnoreCase("leave"))
-        {
-            mpl.RemoveTrib(player);
-            player.sendMessage(ChatColor.DARK_AQUA + "You have left the game!");
-            tributes--;
-        }
-        else if (commandLabel.equalsIgnoreCase("who"))
-        {
-            mpl.listPlayers(player);
-        }
-        else if (commandLabel.equalsIgnoreCase("start"))
-        {
 
-            if (tributes < 2)
-            {
-                player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
-                return false;
-            }
-
-            if (args.length != 1)
-            {
-                player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
-                return false;
-            }
-
-            int time = Integer.parseInt(args[0]);
-            if (time > 0)
-            {
-                int seconds = time % 60;
-                int minutes = time / 60;
-                player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
-                this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
+        String command = commandLabel.toLowerCase();
+        switch (command)
+        {
+            case "join":
+                mpl.InstantiateTrib(player);
+                player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
+                tributes++;
+                player.sendMessage(ChatColor.YELLOW + "[" + tributes + "]");
+                break;
+            case "leave":
+                mpl.RemoveTrib(player);
+                player.sendMessage(ChatColor.DARK_AQUA + "You have left the game!");
+                tributes--;
+                break;
+            case "alive":
+                mpl.listPlayers(player);
+                break;
+            case "start":
+                if (tributes < 2)
                 {
-                    int timer = time;
+                    player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
+                    return false;
+                }
 
-                    public void run()
+                if (args.length != 1)
+                {
+                    player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
+                    return false;
+                }
+
+                int time = Integer.parseInt(args[0]);
+                if (time > 0)
+                {
+                    int seconds = time % 60;
+                    int minutes = time / 60;
+                    player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
+                    this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
                     {
-                        if (timer == -1)
-                        {
-                            return;
-                        }
+                        int timer = time;
 
-                        if (timer == 0)
+                        public void run()
                         {
-                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Go!");
-                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
-                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
-                            mpl.startGame();
-                        }
-                        else if (timer > 60 && (timer % 60) == 0)
-                        {
-                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + (timer / 60) + " minutes until tournament begins");
-                        }
-                        else if (timer == 60)
-                        {
-                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "1 minute until tournament begins");
-                        }
-                        else if (timer < 60)
-                        {
-                            if ((timer % 15) == 0)
+                            if (timer == -1)
                             {
-                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
+                                return;
                             }
-                            else if (timer <= 10)
+
+                            if (timer == 0)
                             {
-                                if (timer == 1)
-                                {
-                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " second until tournament begins");
-                                }
-                                else
+                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Go!");
+                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
+                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
+                                mpl.startGame();
+                            }
+                            else if (timer > 60 && (timer % 60) == 0)
+                            {
+                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + (timer / 60) + " minutes until tournament begins");
+                            }
+                            else if (timer == 60)
+                            {
+                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "1 minute until tournament begins");
+                            }
+                            else if (timer < 60)
+                            {
+                                if ((timer % 15) == 0)
                                 {
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
                                 }
+                                else if (timer <= 10)
+                                {
+                                    if (timer == 1)
+                                    {
+                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " second until tournament begins");
+                                    }
+                                    else
+                                    {
+                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
+                                    }
+                                }
                             }
+                            timer--;
                         }
-                        timer--;
-                    }
-                }, 0L, 20L);
-                return true;
-            }
-            
-            player.sendMessage(ChatColor.RED + "Please enter a whole number");
+                    }, 0L, 20L);
+                    return true;
+                }
+
+                player.sendMessage(ChatColor.RED + "Please enter a whole number");
+                break;
+            default:
+                break;
         }
-        
+
         return true;
     }
 }
