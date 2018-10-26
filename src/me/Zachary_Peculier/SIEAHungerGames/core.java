@@ -56,13 +56,13 @@ public class core extends JavaPlugin
                 if (tributes < 2)
                 {
                     player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
-                    return false;
+                    return true;
                 }
 
                 if (args.length != 1)
                 {
                     player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
-                    return false;
+                    return true;
                 }
 
                 int time = Integer.parseInt(args[0]);
