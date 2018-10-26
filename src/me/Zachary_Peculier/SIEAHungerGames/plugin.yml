@@ -11,6 +11,6 @@ commands:
   leave:
     description: leave game
     usage: /<command>
-  who:
+  alive:
     description: Lists players in game
     usage: /<command>
