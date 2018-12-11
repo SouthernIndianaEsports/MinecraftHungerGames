@@ -64,63 +64,64 @@ public class core extends JavaPlugin
                     player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
                     return true;
                 }
-
-                int time = Integer.parseInt(args[0]);
-                if (time > 0)
+                if (isInt(args[0]))
                 {
-                    int seconds = time % 60;
-                    int minutes = time / 60;
-                    player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
-                    this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
+                    int time = Integer.parseInt(args[0]);
+                    if (time > 0)
                     {
-                        int timer = time;
-
-                        public void run()
+                        int seconds = time % 60;
+                        int minutes = time / 60;
+                        player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
+                        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
                         {
-                            if (timer == -1)
-                            {
-                                return;
-                            }
+                            int timer = time;
 
-                            if (timer == 0)
+                            public void run()
                             {
-                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Go!");
-                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
-                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
-                                mpl.startGame();
-                            }
-                            else if (timer > 60 && (timer % 60) == 0)
-                            {
-                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + (timer / 60) + " minutes until tournament begins");
-                            }
-                            else if (timer == 60)
-                            {
-                                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "1 minute until tournament begins");
-                            }
-                            else if (timer < 60)
-                            {
-                                if ((timer % 15) == 0)
+                                if (timer == -1)
                                 {
-                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
+                                    return;
                                 }
-                                else if (timer <= 10)
+
+                                if (timer == 0)
                                 {
-                                    if (timer == 1)
-                                    {
-                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " second until tournament begins");
-                                    }
-                                    else
+                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Go!");
+                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
+                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
+                                    mpl.startGame();
+                                }
+                                else if (timer > 60 && (timer % 60) == 0)
+                                {
+                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + (timer / 60) + " minutes until tournament begins");
+                                }
+                                else if (timer == 60)
+                                {
+                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "1 minute until tournament begins");
+                                }
+                                else if (timer < 60)
+                                {
+                                    if ((timer % 15) == 0)
                                     {
                                         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
                                     }
+                                    else if (timer <= 10)
+                                    {
+                                        if (timer == 1)
+                                        {
+                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " second until tournament begins");
+                                        }
+                                        else
+                                        {
+                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
+                                        }
+                                    }
                                 }
+                                timer--;
                             }
-                            timer--;
-                        }
-                    }, 0L, 20L);
-                    return true;
+                        }, 0L, 20L);
+                        return true;
+                    }
                 }
-
                 player.sendMessage(ChatColor.RED + "Please enter a whole number");
                 break;
             default:
@@ -128,5 +129,17 @@ public class core extends JavaPlugin
         }
 
         return true;
+    }
+
+    private boolean isInt(String string)
+    {
+        try
+        {
+            Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e)
+        {
+            return false;
+        }
     }
 }
