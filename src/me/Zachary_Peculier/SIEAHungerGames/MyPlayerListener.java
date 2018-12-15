@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -89,6 +90,10 @@ public class MyPlayerListener implements Listener
         {
             alive.get(i).setGameMode(GameMode.SURVIVAL);
         }
+    }
+    public int updateTributes()
+    {
+        return alive.size();
     }
 
     public void listPlayers(Player player)

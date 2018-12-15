@@ -15,6 +15,7 @@ public class core extends JavaPlugin
     public static core plugin;
     PluginDescriptionFile pdFile = this.getDescription();
     public int tributes;
+    public boolean inProgress;
     public final java.util.logging.Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
 
@@ -52,6 +53,16 @@ public class core extends JavaPlugin
             case "alive":
                 mpl.listPlayers(player);
                 break;
+            case "who":
+                mpl.listPlayers(player);
+                break;
+            case "help":
+                player.sendMessage(ChatColor.GRAY + "Welcome to the Minecraft Hunger Games!");
+                tributes = mpl.updateTributes();
+                player.sendMessage(ChatColor.GRAY + "There are " + tributes + " players remaining");
+                player.sendMessage(ChatColor.GRAY + "/join - joins game (if not in progress)");
+                player.sendMessage(ChatColor.GRAY + "/leave - leaves game");
+                player.sendMessage(ChatColor.GRAY + "/alive (or /who) - shows list of remaining players");
             case "start":
                 if (tributes < 2)
                 {

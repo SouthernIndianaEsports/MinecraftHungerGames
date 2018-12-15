@@ -15,3 +15,9 @@ commands:
   alive:
     description: Lists players in game
     usage: /<command>
+  who:
+    description: Lists players in game
+    usage: /<command>
+  help:
+    description: gives information
+    usage: /<command>
