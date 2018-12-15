@@ -122,7 +122,10 @@ public class core extends JavaPlugin
                         return true;
                     }
                 }
-                player.sendMessage(ChatColor.RED + "Please enter a whole number");
+                else
+                {
+                    player.sendMessage(ChatColor.RED + "Please enter a whole number");
+                }
                 break;
             default:
                 break;
