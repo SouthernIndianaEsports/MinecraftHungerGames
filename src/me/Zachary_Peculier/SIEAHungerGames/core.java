@@ -15,7 +15,7 @@ public class core extends JavaPlugin
     public static core plugin;
     PluginDescriptionFile pdFile = this.getDescription();
     public int tributes;
-    public boolean inProgress;
+    public boolean inProgress = false;
     public final java.util.logging.Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
 
@@ -40,10 +40,17 @@ public class core extends JavaPlugin
         switch (command)
         {
             case "join":
-                mpl.InstantiateTrib(player);
-                player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
-                tributes++;
-                player.sendMessage(ChatColor.YELLOW + "[" + tributes + "]");
+                if (!inProgress)
+                {
+                    mpl.InstantiateTrib(player);
+                    player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
+                    tributes++;
+                    player.sendMessage(ChatColor.YELLOW + "[" + tributes + "]");
+                }
+                else
+                {
+                    player.sendMessage(ChatColor.RED + "GAME IN PROGRESS");
+                }
                 break;
             case "leave":
                 mpl.RemoveTrib(player);
@@ -96,10 +103,11 @@ public class core extends JavaPlugin
 
                                 if (timer == 0)
                                 {
+                                    mpl.startGame();
+                                    inProgress = true;
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Go!");
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
-                                    mpl.startGame();
                                 }
                                 else if (timer > 60 && (timer % 60) == 0)
                                 {

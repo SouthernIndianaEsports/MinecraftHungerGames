@@ -18,6 +18,7 @@ public class MyPlayerListener implements Listener
     public static core plugin;
     ArrayList<Player> alive = new ArrayList<Player>();
     ArrayList<Player> dead = new ArrayList<Player>();
+    ArrayList<Player> quitter = new ArrayList<Player>();
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event)
@@ -53,6 +54,10 @@ public class MyPlayerListener implements Listener
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
         player.setGameMode(GameMode.ADVENTURE);
+        if(quitter.contains(player))
+        {
+            player.sendMessage(ChatColor.RED + "You have disconnected mid game and have been disqualified.");
+        }
     }
 
     @EventHandler
@@ -65,6 +70,7 @@ public class MyPlayerListener implements Listener
         if (alive.contains(player))
         {
             alive.remove(player);
+            quitter.add(player);
         }
 
         if (dead.contains(player))
