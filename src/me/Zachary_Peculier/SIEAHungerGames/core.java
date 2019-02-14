@@ -66,7 +66,7 @@ public class core extends JavaPlugin
                 break;
             case "help":
                 player.sendMessage(ChatColor.GRAY + "Welcome to the Minecraft Hunger Games!");
-                tributes = mpl.updateTributes();
+                tributes = mpl.getTributeSize();
                 player.sendMessage(ChatColor.GRAY + "There are " + tributes + " players remaining");
                 player.sendMessage(ChatColor.GRAY + "/join - joins game (if not in progress)");
                 player.sendMessage(ChatColor.GRAY + "/leave - leaves game");

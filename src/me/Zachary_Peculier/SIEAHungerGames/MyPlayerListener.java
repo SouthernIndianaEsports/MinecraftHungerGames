@@ -32,7 +32,7 @@ public class MyPlayerListener implements Listener
         }
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
         player.setGameMode(GameMode.SPECTATOR);
-        alive.remove(player);
+        RemoveTrib(player);
         dead.add(player);
 
         if (alive.size() == 1)
@@ -44,7 +44,7 @@ public class MyPlayerListener implements Listener
         }
         else
         {
-            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining");
+            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining.");
         }
     }
 
@@ -59,10 +59,14 @@ public class MyPlayerListener implements Listener
             player.sendMessage(ChatColor.RED + "You have disconnected mid game and have been disqualified.");
             player.setGameMode(GameMode.SPECTATOR);
         }
-        else if(!alive.contains(player))
+        else if(dead.contains(player))
         {
-            player.sendMessage(ChatColor.RED + "You aren't playing.");
+            player.sendMessage(ChatColor.RED + "You are dead");
             player.setGameMode(GameMode.SPECTATOR);
+        }
+        else
+        {
+            player.sendMessage(ChatColor.RED + "You aren't playing");
         }
     }
 
@@ -78,11 +82,6 @@ public class MyPlayerListener implements Listener
             alive.remove(player);
             quitter.add(player);
         }
-
-        if (dead.contains(player))
-        {
-            dead.remove(player);
-        }
     }
 
     public void addTrib(Player player)
@@ -93,7 +92,6 @@ public class MyPlayerListener implements Listener
     public void RemoveTrib(Player player)
     {
         alive.remove(player);
-
     }
 
     public void startGame()
@@ -103,7 +101,7 @@ public class MyPlayerListener implements Listener
             alive.get(i).setGameMode(GameMode.SURVIVAL);
         }
     }
-    public int updateTributes()
+    public int getTributeSize()
     {
         return alive.size();
     }
