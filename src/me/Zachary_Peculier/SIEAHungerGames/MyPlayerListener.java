@@ -39,7 +39,7 @@ public class MyPlayerListener implements Listener
         {
             for (int i = 0; i < 10; i++)
             {
-                Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS " + alive.get(0).getName() + "!!!!");
+                Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS, " + alive.get(0).getName() + "!!!!");
             }
         }
         else
@@ -57,6 +57,12 @@ public class MyPlayerListener implements Listener
         if(quitter.contains(player))
         {
             player.sendMessage(ChatColor.RED + "You have disconnected mid game and have been disqualified.");
+            player.setGameMode(GameMode.SPECTATOR);
+        }
+        else if(!alive.contains(player))
+        {
+            player.sendMessage(ChatColor.RED + "You aren't playing.");
+            player.setGameMode(GameMode.SPECTATOR);
         }
     }
 
@@ -79,7 +85,7 @@ public class MyPlayerListener implements Listener
         }
     }
 
-    public void InstantiateTrib(Player player)
+    public void addTrib(Player player)
     {
         alive.add(player);
     }

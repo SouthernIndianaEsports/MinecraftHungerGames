@@ -16,6 +16,7 @@ public class core extends JavaPlugin
     PluginDescriptionFile pdFile = this.getDescription();
     public int tributes;
     public boolean inProgress = false;
+    public boolean timerGoing = false;
     public final java.util.logging.Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
 
@@ -42,7 +43,7 @@ public class core extends JavaPlugin
             case "join":
                 if (!inProgress)
                 {
-                    mpl.InstantiateTrib(player);
+                    mpl.addTrib(player);
                     player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
                     tributes++;
                     player.sendMessage(ChatColor.YELLOW + "[" + tributes + "]");
@@ -71,6 +72,10 @@ public class core extends JavaPlugin
                 player.sendMessage(ChatColor.GRAY + "/leave - leaves game");
                 player.sendMessage(ChatColor.GRAY + "/alive (or /who) - shows list of remaining players");
             case "start":
+                if(timerGoing)
+                {
+                    player.sendMessage(ChatColor.RED + "Timer in progress!");
+                }
                 if (tributes < 2)
                 {
                     player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
@@ -84,6 +89,10 @@ public class core extends JavaPlugin
                 }
                 if (isInt(args[0]))
                 {
+                    if(!timerGoing)
+                    {
+                        timerGoing = true;
+                    }
                     int time = Integer.parseInt(args[0]);
                     if (time > 0)
                     {
