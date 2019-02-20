@@ -12,12 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class core extends JavaPlugin
 {
-    public static core plugin;
     PluginDescriptionFile pdFile = this.getDescription();
-    public int tributes;
+    public int tributes = 0;
     public boolean inProgress = false;
     public boolean timerGoing = false;
-    public final java.util.logging.Logger logger = Logger.getLogger("Minecraft");
+    public final Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
 
     @Override
@@ -76,6 +75,7 @@ public class core extends JavaPlugin
                 {
                     player.sendMessage(ChatColor.RED + "Timer in progress!");
                 }
+
                 if (tributes < 2)
                 {
                     player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
@@ -87,6 +87,7 @@ public class core extends JavaPlugin
                     player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
                     return true;
                 }
+
                 if (isInt(args[0]))
                 {
                     if(!timerGoing)
@@ -120,7 +121,7 @@ public class core extends JavaPlugin
                                 }
                                 else if (timer > 60 && (timer % 60) == 0)
                                 {
-                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + (timer / 60) + " minutes until tournament begins");
+                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + (timer / 60) + " minutes until tournament begins");
                                 }
                                 else if (timer == 60)
                                 {
@@ -130,17 +131,17 @@ public class core extends JavaPlugin
                                 {
                                     if ((timer % 15) == 0)
                                     {
-                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
+                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
                                     }
                                     else if (timer <= 10)
                                     {
                                         if (timer == 1)
                                         {
-                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " second until tournament begins");
+                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + timer + " second until tournament begins");
                                         }
                                         else
                                         {
-                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "" + timer + " seconds until tournament begins");
+                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
                                         }
                                     }
                                 }
@@ -168,7 +169,8 @@ public class core extends JavaPlugin
         {
             Integer.parseInt(string);
             return true;
-        } catch (NumberFormatException e)
+        }
+        catch (NumberFormatException e)
         {
             return false;
         }

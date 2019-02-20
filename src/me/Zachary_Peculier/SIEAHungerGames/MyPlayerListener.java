@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class MyPlayerListener implements Listener
 {
-    public static core plugin;
     ArrayList<Player> alive = new ArrayList<Player>();
     ArrayList<Player> dead = new ArrayList<Player>();
     ArrayList<Player> quitter = new ArrayList<Player>();
@@ -30,6 +29,7 @@ public class MyPlayerListener implements Listener
         {
             return;
         }
+
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
         player.setGameMode(GameMode.SPECTATOR);
         RemoveTrib(player);
@@ -101,6 +101,7 @@ public class MyPlayerListener implements Listener
             alive.get(i).setGameMode(GameMode.SURVIVAL);
         }
     }
+
     public int getTributeSize()
     {
         return alive.size();
@@ -110,10 +111,8 @@ public class MyPlayerListener implements Listener
     {
         for (int i = 0; i == alive.size(); i++)
         {
-
             player.sendMessage(alive.get(i).getName());
         }
         player.sendMessage(ChatColor.YELLOW + "" + (alive.size() + 1) + ChatColor.DARK_AQUA + " remain");
-
     }
 }
