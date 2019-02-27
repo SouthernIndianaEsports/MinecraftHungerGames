@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -40,24 +41,18 @@ public class core extends JavaPlugin
         String command = commandLabel.toLowerCase();
         switch (command)
         {
-            case "join":
-                if (!inProgress)
+            case "admin":
+            {
+                if (player.hasPermission("siea.admin"))
                 {
-                    mpl.addTrib(player);
-                    player.sendMessage(ChatColor.DARK_AQUA + "You have joined the game!");
-                    tributes++;
-                    player.sendMessage(ChatColor.YELLOW + "[" + tributes + "]");
+                    mpl.RemoveTrib(player);
+                    player.setGameMode(GameMode.CREATIVE);
                 }
                 else
                 {
-                    player.sendMessage(ChatColor.RED + "GAME IN PROGRESS");
+                    player.sendMessage(ChatColor.RED + "No Permission!");
                 }
-                break;
-            case "leave":
-                mpl.RemoveTrib(player);
-                player.sendMessage(ChatColor.DARK_AQUA + "You have left the game!");
-                tributes--;
-                break;
+            }
             case "alive":
                 mpl.listPlayers(player);
                 break;
@@ -68,11 +63,12 @@ public class core extends JavaPlugin
                 player.sendMessage(ChatColor.GRAY + "Welcome to the Minecraft Hunger Games!");
                 tributes = mpl.getTributeSize();
                 player.sendMessage(ChatColor.GRAY + "There are " + tributes + " players remaining");
-                player.sendMessage(ChatColor.GRAY + "/join - joins game (if not in progress)");
-                player.sendMessage(ChatColor.GRAY + "/leave - leaves game");
                 player.sendMessage(ChatColor.GRAY + "/alive (or /who) - shows list of remaining players");
             case "start":
-                if(timerGoing)
+                tributes = mpl.getTributeSize();
+                if(!inProgress)
+                    
+                if (timerGoing)
                 {
                     player.sendMessage(ChatColor.RED + "Timer in progress!");
                 }
@@ -91,7 +87,7 @@ public class core extends JavaPlugin
 
                 if (isInt(args[0]))
                 {
-                    if(!timerGoing)
+                    if (!timerGoing)
                     {
                         timerGoing = true;
                     }
@@ -170,8 +166,7 @@ public class core extends JavaPlugin
         {
             Integer.parseInt(string);
             return true;
-        }
-        catch (NumberFormatException e)
+        } catch (NumberFormatException e)
         {
             return false;
         }

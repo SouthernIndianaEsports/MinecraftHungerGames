@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class MyPlayerListener implements Listener
 {
+    public boolean inProgress = false;
     ArrayList<Player> alive = new ArrayList<Player>();
     ArrayList<Player> dead = new ArrayList<Player>();
     ArrayList<Player> quitter = new ArrayList<Player>();
@@ -53,20 +53,27 @@ public class MyPlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
-        player.setGameMode(GameMode.ADVENTURE);
-        if(quitter.contains(player))
+        if (!inProgress)
         {
-            player.sendMessage(ChatColor.RED + "You have disconnected mid game and have been disqualified.");
-            player.setGameMode(GameMode.SPECTATOR);
-        }
-        else if(dead.contains(player))
-        {
-            player.sendMessage(ChatColor.RED + "You are dead");
-            player.setGameMode(GameMode.SPECTATOR);
+            if (quitter.contains(player))
+            {
+                player.sendMessage(ChatColor.RED + "You have disconnected mid game and have been disqualified.");
+                player.setGameMode(GameMode.SPECTATOR);
+            }
+            else if (dead.contains(player))
+            {
+                player.sendMessage(ChatColor.RED + "You are dead");
+                player.setGameMode(GameMode.SPECTATOR);
+            }
+            else
+            {
+                player.sendMessage(ChatColor.RED + "You aren't playing");
+            }
         }
         else
         {
-            player.sendMessage(ChatColor.RED + "You aren't playing");
+            player.setGameMode(GameMode.ADVENTURE);
+            alive.add(player);
         }
     }
 
@@ -74,13 +81,18 @@ public class MyPlayerListener implements Listener
     public void onPlayerLeave(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-
         event.setQuitMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
-
-        if (alive.contains(player))
+        if (!inProgress)
+        {
+            if (alive.contains(player))
+            {
+                alive.remove(player);
+                quitter.add(player);
+            }
+        }
+        else
         {
             alive.remove(player);
-            quitter.add(player);
         }
     }
 
@@ -100,6 +112,7 @@ public class MyPlayerListener implements Listener
         {
             alive.get(i).setGameMode(GameMode.SURVIVAL);
         }
+        inProgress = true;
     }
 
     public int getTributeSize()

@@ -6,12 +6,6 @@ commands:
   start:
     description: countdown
     usage: /<command> <args>
-  join:
-    description: joins game
-    usage: /<command>
-  leave:
-    description: leave game
-    usage: /<command>
   alive:
     description: Lists players in game
     usage: /<command>
@@ -20,4 +14,7 @@ commands:
     usage: /<command>
   help:
     description: gives information
+    usage: /<command>
+  magicmabis:
+    description: admin mode
     usage: /<command>
