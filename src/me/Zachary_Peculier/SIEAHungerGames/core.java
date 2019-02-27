@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class core extends JavaPlugin
 {
     PluginDescriptionFile pdFile = this.getDescription();
+    public static core plugin;
     public int tributes = 0;
     public boolean inProgress = false;
     public boolean timerGoing = false;
@@ -121,27 +122,27 @@ public class core extends JavaPlugin
                                 }
                                 else if (timer > 60 && (timer % 60) == 0)
                                 {
-                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + (timer / 60) + " minutes until tournament begins");
+                                    Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + (timer / 60) + " minutes until tournament begins");
                                 }
                                 else if (timer == 60)
                                 {
-                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "1 minute until tournament begins");
+                                    Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + "1 minute until tournament begins");
                                 }
                                 else if (timer < 60)
                                 {
                                     if ((timer % 15) == 0)
                                     {
-                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
+                                        Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
                                     }
                                     else if (timer <= 10)
                                     {
                                         if (timer == 1)
                                         {
-                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + timer + " second until tournament begins");
+                                            Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + timer + " second until tournament begins");
                                         }
                                         else
                                         {
-                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
+                                            Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
                                         }
                                     }
                                 }
