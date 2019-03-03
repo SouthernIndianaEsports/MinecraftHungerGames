@@ -66,12 +66,12 @@ public class core extends JavaPlugin
                 player.sendMessage(ChatColor.GRAY + "/alive (or /who) - shows list of remaining players");
             case "start":
                 tributes = mpl.getTributeSize();
-                if(!inProgress)
-                    
-                if (timerGoing)
-                {
-                    player.sendMessage(ChatColor.RED + "Timer in progress!");
-                }
+                if (!inProgress)
+
+                    if (timerGoing)
+                    {
+                        player.sendMessage(ChatColor.RED + "Timer in progress!");
+                    }
 
                 if (tributes < 2)
                 {
@@ -112,33 +112,33 @@ public class core extends JavaPlugin
                                 {
                                     mpl.startGame();
                                     inProgress = true;
-                                    Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Go!");
+                                    Bukkit.broadcastMessage(ChatColor.RED + "Go!");
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
                                 }
                                 else if (timer > 60 && (timer % 60) == 0)
                                 {
-                                    Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + (timer / 60) + " minutes until tournament begins");
+                                    Bukkit.broadcastMessage("" + ChatColor.RED + (timer / 60) + " minutes until tournament begins");
                                 }
                                 else if (timer == 60)
                                 {
-                                    Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + "1 minute until tournament begins");
+                                    Bukkit.broadcastMessage("" + ChatColor.RED + "1 minute until tournament begins");
                                 }
                                 else if (timer < 60)
                                 {
                                     if ((timer % 15) == 0)
                                     {
-                                        Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
+                                        Bukkit.broadcastMessage("" + ChatColor.RED + timer + " seconds until tournament begins");
                                     }
                                     else if (timer <= 10)
                                     {
                                         if (timer == 1)
                                         {
-                                            Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + timer + " second until tournament begins");
+                                            Bukkit.broadcastMessage("" + ChatColor.RED + timer + " second until tournament begins");
                                         }
                                         else
                                         {
-                                            Bukkit.broadcastMessage("" + ChatColor.DARK_AQUA + timer + " seconds until tournament begins");
+                                            Bukkit.broadcastMessage("" + ChatColor.RED + timer + " seconds until tournament begins");
                                         }
                                     }
                                 }
