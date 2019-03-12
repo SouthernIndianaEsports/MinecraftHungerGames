@@ -118,27 +118,23 @@ public class core extends JavaPlugin
                                 }
                                 else if (timer > 60 && (timer % 60) == 0)
                                 {
-                                    Bukkit.broadcastMessage("" + ChatColor.RED + (timer / 60) + " minutes until tournament begins");
+                                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + (timer / 60) + " minutes.");
                                 }
                                 else if (timer == 60)
                                 {
-                                    Bukkit.broadcastMessage("" + ChatColor.RED + "1 minute until tournament begins");
+                                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
                                 }
                                 else if (timer < 60)
                                 {
-                                    if ((timer % 15) == 0)
+                                    if ((timer % 15 == 0) && (timer <= 10))
                                     {
-                                        Bukkit.broadcastMessage("" + ChatColor.RED + timer + " seconds until tournament begins");
+                                        Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + timer + " seconds.");
                                     }
                                     else if (timer <= 10)
                                     {
                                         if (timer == 1)
                                         {
-                                            Bukkit.broadcastMessage("" + ChatColor.RED + timer + " second until tournament begins");
-                                        }
-                                        else
-                                        {
-                                            Bukkit.broadcastMessage("" + ChatColor.RED + timer + " seconds until tournament begins");
+                                            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 second.");
                                         }
                                     }
                                 }
