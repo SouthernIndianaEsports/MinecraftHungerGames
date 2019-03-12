@@ -73,6 +73,7 @@ public class core extends JavaPlugin
                     tributes = mpl.getTributeSize();
                     player.sendMessage(ChatColor.GRAY + "There are " + tributes + " players remaining");
                     player.sendMessage(ChatColor.GRAY + "/alive (or /who) - shows list of remaining players");
+                    break;
                 case "start":
                     if (player.hasPermission("siea.admin"))
                     {
