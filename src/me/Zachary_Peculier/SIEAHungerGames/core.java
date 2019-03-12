@@ -22,13 +22,15 @@ public class core extends JavaPlugin
     public boolean timerGoing = false;
     public final Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
-    WorldBorder wb = Bukkit.getWorld("world").getWorldBorder();
+    public WorldBorder wb;
+    
 
     @Override
     public void onEnable()
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been activated!");
         Bukkit.getWorld("world").setSpawnLocation(0, 72, 0);
+        wb = Bukkit.getWorld("world").getWorldBorder();
         wb.setCenter(0, 0);
         wb.setSize(1000);
     }
