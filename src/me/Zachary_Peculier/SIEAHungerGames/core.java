@@ -10,6 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class core extends JavaPlugin
 {
@@ -39,6 +41,7 @@ public class core extends JavaPlugin
         Player player = (Player) sender;
 
         String command = commandLabel.toLowerCase();
+        for (Player players : getServer().getOnlinePlayers())
         switch (command)
         {
             case "admin":
@@ -112,6 +115,7 @@ public class core extends JavaPlugin
                                 {
                                     mpl.startGame();
                                     inProgress = true;
+                                    mpl.unfreezePlayers();
                                     Bukkit.broadcastMessage(ChatColor.RED + "Go!");
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
                                     Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
@@ -122,6 +126,7 @@ public class core extends JavaPlugin
                                 }
                                 else if (timer == 60)
                                 {
+                                    mpl.freezePlayers();
                                     Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
                                 }
                                 else if (timer < 60)

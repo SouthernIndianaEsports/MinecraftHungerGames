@@ -11,6 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class MyPlayerListener implements Listener
 {
@@ -124,8 +126,26 @@ public class MyPlayerListener implements Listener
     {
         for (int i = 0; i == alive.size(); i++)
         {
-            player.sendMessage(alive.get(i).getName());
+            player.sendMessage("[" + i + "]" + alive.get(i).getName());
         }
         player.sendMessage(ChatColor.YELLOW + "" + (alive.size() + 1) + ChatColor.DARK_AQUA + " remain");
+    }
+
+    public void freezePlayers()
+    {
+        for (int i = 0; i == alive.size(); i++)
+        {
+            alive.get(i).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 60));
+        }
+
+    }
+
+    public void unfreezePlayers()
+    {
+        for(int i = 0; i == alive.size(); i++)
+        {
+            for (PotionEffect effect : alive.get(i).getActivePotionEffects())
+                alive.get(i).removePotionEffect(effect.getType());
+        }
     }
 }
