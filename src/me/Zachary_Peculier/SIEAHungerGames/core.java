@@ -28,6 +28,7 @@ public class core extends JavaPlugin
     public void onEnable()
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been activated!");
+        Bukkit.getWorld("world").setSpawnLocation(0, 72, 0);
         wb.setCenter(0, 0);
         wb.setSize(1000);
     }
