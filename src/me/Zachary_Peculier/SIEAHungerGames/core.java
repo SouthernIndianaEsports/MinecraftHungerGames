@@ -131,7 +131,7 @@ public class core extends JavaPlugin
                                 }
                                 else if (timer < 60)
                                 {
-                                    if ((timer % 15 == 0) && (timer <= 10))
+                                    if ((timer % 15 == 0) || (timer <= 10))
                                     {
                                         Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + timer + " seconds.");
                                     }
