@@ -15,6 +15,10 @@ commands:
   help:
     description: gives information
     usage: /<command>
-  magicmabis:
+  admin:
     description: admin mode
     usage: /<command>
+permissions:
+  siea.admin:
+     description: Admin perms
+     default: op
