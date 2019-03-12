@@ -5,13 +5,13 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.WorldBorder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+
 
 public class core extends JavaPlugin
 {
@@ -22,11 +22,14 @@ public class core extends JavaPlugin
     public boolean timerGoing = false;
     public final Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
+    WorldBorder wb = Bukkit.getWorld("world").getWorldBorder();
 
     @Override
     public void onEnable()
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been activated!");
+        wb.setCenter(0, 0);
+        wb.setSize(1000);
     }
 
     @Override
@@ -35,7 +38,7 @@ public class core extends JavaPlugin
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been deactivated!");
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "unused" })
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         Player player = (Player) sender;
@@ -121,6 +124,8 @@ public class core extends JavaPlugin
                                             Bukkit.broadcastMessage(ChatColor.RED + "Go!");
                                             Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
                                             Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
+                                            Bukkit.broadcastMessage(ChatColor.GREEN + "Over the next hour, the border will be slowly shrinking to the center 32x32 blocks. ");
+                                            wb.setSize(64, 3600);
                                         }
                                         else if (timer > 60 && (timer % 60) == 0)
                                         {
