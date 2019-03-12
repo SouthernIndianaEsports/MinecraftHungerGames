@@ -53,7 +53,7 @@ public class core extends JavaPlugin
                     }
                     else
                     {
-                        player.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                        player.sendMessage(ChatColor.RED + "No Permission!");
                     }
                 }
                 case "alive":
@@ -68,97 +68,90 @@ public class core extends JavaPlugin
                     player.sendMessage(ChatColor.GRAY + "There are " + tributes + " players remaining");
                     player.sendMessage(ChatColor.GRAY + "/alive (or /who) - shows list of remaining players");
                 case "start":
-                    if (player.hasPermission("siea.admin"))
+                    tributes = mpl.getTributeSize();
+                    if (!inProgress)
+
+                        if (timerGoing)
+                        {
+                            player.sendMessage(ChatColor.RED + "Timer in progress!");
+                        }
+
+                    if (tributes < 2)
                     {
-                        tributes = mpl.getTributeSize();
-                        if (!inProgress)
+                        player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
+                        return true;
+                    }
 
-                            if (timerGoing)
-                            {
-                                player.sendMessage(ChatColor.RED + "Timer in progress!");
-                            }
+                    if (args.length != 1)
+                    {
+                        player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
+                        return true;
+                    }
 
-                        if (tributes < 2)
+                    if (isInt(args[0]))
+                    {
+                        if (!timerGoing)
                         {
-                            player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
-                            return true;
+                            timerGoing = true;
                         }
-
-                        if (args.length != 1)
+                        int time = Integer.parseInt(args[0]);
+                        if (time > 0)
                         {
-                            player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
-                            return true;
-                        }
+                            int seconds = time % 60;
+                            int minutes = time / 60;
+                            player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
+                            this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
+                            {
+                                int timer = time;
 
-                        if (isInt(args[0]))
-                        {
-                            if (!timerGoing)
-                            {
-                                timerGoing = true;
-                            }
-                            int time = Integer.parseInt(args[0]);
-                            if (time > 0)
-                            {
-                                int seconds = time % 60;
-                                int minutes = time / 60;
-                                player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
-                                this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
+                                public void run()
                                 {
-                                    int timer = time;
-
-                                    public void run()
+                                    if (timer == -1)
                                     {
-                                        if (timer == -1)
-                                        {
-                                            return;
-                                        }
-
-                                        if (timer == 0)
-                                        {
-                                            mpl.startGame();
-                                            inProgress = true;
-                                            mpl.unfreezePlayers();
-                                            Bukkit.broadcastMessage(ChatColor.RED + "Go!");
-                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
-                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
-                                        }
-                                        else if (timer > 60 && (timer % 60) == 0)
-                                        {
-                                            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + (timer / 60) + " minutes.");
-                                        }
-                                        else if (timer == 60)
-                                        {
-                                            mpl.freezePlayers();
-                                            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
-                                        }
-                                        else if (timer < 60)
-                                        {
-                                            if ((timer % 15 == 0) || (timer <= 10))
-                                            {
-                                                Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + timer + " seconds.");
-                                            }
-                                            else if (timer <= 10)
-                                            {
-                                                if (timer == 1)
-                                                {
-                                                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 second.");
-                                                }
-                                            }
-                                        }
-                                        timer--;
+                                        return;
                                     }
-                                }, 0L, 20L);
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            player.sendMessage(ChatColor.RED + "Please enter a whole number");
+
+                                    if (timer == 0)
+                                    {
+                                        mpl.startGame();
+                                        inProgress = true;
+                                        mpl.unfreezePlayers();
+                                        Bukkit.broadcastMessage(ChatColor.RED + "Go!");
+                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
+                                        Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
+                                    }
+                                    else if (timer > 60 && (timer % 60) == 0)
+                                    {
+                                        Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + (timer / 60) + " minutes.");
+                                    }
+                                    else if (timer == 60)
+                                    {
+                                        mpl.freezePlayers();
+                                        Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
+                                    }
+                                    else if (timer < 60)
+                                    {
+                                        if ((timer % 15 == 0) || (timer <= 10))
+                                        {
+                                            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + timer + " seconds.");
+                                        }
+                                        else if (timer <= 10)
+                                        {
+                                            if (timer == 1)
+                                            {
+                                                Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 second.");
+                                            }
+                                        }
+                                    }
+                                    timer--;
+                                }
+                            }, 0L, 20L);
+                            return true;
                         }
                     }
                     else
                     {
-                        player.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                        player.sendMessage(ChatColor.RED + "Please enter a whole number");
                     }
                     break;
                 default:
@@ -180,4 +173,3 @@ public class core extends JavaPlugin
         }
     }
 }
-//hello world
