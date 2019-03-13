@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class MyPlayerListener implements Listener
 {
+   public static core plugin;
     public boolean inProgress = false;
     ArrayList<Player> alive = new ArrayList<Player>();
     ArrayList<Player> dead = new ArrayList<Player>();
@@ -55,7 +56,7 @@ public class MyPlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
-        if (!inProgress)
+        if (inProgress)
         {
             if (quitter.contains(player))
             {
@@ -124,6 +125,7 @@ public class MyPlayerListener implements Listener
 
     public void listPlayers(Player player)
     {
+        player.sendMessage("HELLO WORLD");
         for (int i = 0; i == alive.size(); i++)
         {
             player.sendMessage("[" + i + "]" + alive.get(i).getName());

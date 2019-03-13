@@ -1,5 +1,6 @@
 package me.Zachary_Peculier.SIEAHungerGames;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -17,13 +18,12 @@ public class core extends JavaPlugin
 {
     PluginDescriptionFile pdFile = this.getDescription();
     public static core plugin;
-    public int tributes = 0;
     public boolean inProgress = false;
     public boolean timerGoing = false;
     public final Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
     public WorldBorder wb;
-    
+    ArrayList<Player> tributes = new ArrayList<Player>();
 
     @Override
     public void onEnable()
@@ -70,14 +70,12 @@ public class core extends JavaPlugin
                     break;
                 case "help":
                     player.sendMessage(ChatColor.GRAY + "Welcome to the Minecraft Hunger Games!");
-                    tributes = mpl.getTributeSize();
-                    player.sendMessage(ChatColor.GRAY + "There are " + tributes + " players remaining");
+                    player.sendMessage(ChatColor.GRAY + "There are " + mpl.getTributeSize() + " players remaining");
                     player.sendMessage(ChatColor.GRAY + "/alive (or /who) - shows list of remaining players");
                     break;
                 case "start":
                     if (player.hasPermission("siea.admin"))
                     {
-                        tributes = mpl.getTributeSize();
                         if (!inProgress)
 
                             if (timerGoing)
@@ -85,7 +83,7 @@ public class core extends JavaPlugin
                                 player.sendMessage(ChatColor.RED + "Timer in progress!");
                             }
 
-                        if (tributes < 2)
+                        if (mpl.getTributeSize() < 2)
                         {
                             player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
                             return true;
