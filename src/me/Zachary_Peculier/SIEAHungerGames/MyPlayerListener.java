@@ -90,6 +90,9 @@ public class MyPlayerListener implements Listener
             if (alive.contains(player))
             {
                 alive.remove(player);
+                Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected. and therefore forfeited the game!");
+                
+                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining.");
                 quitter.add(player);
             }
         }
@@ -127,7 +130,7 @@ public class MyPlayerListener implements Listener
     {
         for (int i = 0; i != alive.size(); i++)
         {
-            player.sendMessage("[" + i + "]" + alive.get(i).getName());
+            player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + i + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + alive.get(i).getName());
         }
         player.sendMessage(ChatColor.YELLOW + "" + (alive.size()) + ChatColor.DARK_AQUA + " remain");
     }
