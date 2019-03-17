@@ -125,12 +125,11 @@ public class MyPlayerListener implements Listener
 
     public void listPlayers(Player player)
     {
-        player.sendMessage("HELLO WORLD");
-        for (int i = 0; i == alive.size(); i++)
+        for (int i = 0; i != alive.size(); i++)
         {
             player.sendMessage("[" + i + "]" + alive.get(i).getName());
         }
-        player.sendMessage(ChatColor.YELLOW + "" + (alive.size() + 1) + ChatColor.DARK_AQUA + " remain");
+        player.sendMessage(ChatColor.YELLOW + "" + (alive.size()) + ChatColor.DARK_AQUA + " remain");
     }
 
     public void freezePlayers()
