@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 public class core extends JavaPlugin
 {
     PluginDescriptionFile pdFile = this.getDescription();
@@ -33,6 +32,9 @@ public class core extends JavaPlugin
         wb = Bukkit.getWorld("world").getWorldBorder();
         wb.setCenter(0, 0);
         wb.setSize(1000);
+        org.bukkit.plugin.PluginManager plm = this.getServer().getPluginManager();
+        plm.registerEvents(new MyPlayerListener(), this);
+        plm.registerEvents(this.mpl, this);
     }
 
     @Override
@@ -41,7 +43,8 @@ public class core extends JavaPlugin
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been deactivated!");
     }
 
-    @SuppressWarnings({ "deprecation", "unused" })
+    @SuppressWarnings(
+    { "deprecation", "unused" })
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         Player player = (Player) sender;
