@@ -1,0 +1,19 @@
+
+
+Admins who relog join game
+
+Players take damage and go hungry in pregame
+
+Turn off PvP in pregame
+
+PLayer who dies in lobby is removed from game
+
+Make peaceful during pregame
+
+Commands run for every player logged in
+
+reset time when game starts
+
+Gamemode only switches in pregame what the hell?
+
+game can start multiple times?

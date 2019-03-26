@@ -21,6 +21,7 @@ public class MyPlayerListener implements Listener
     ArrayList<Player> alive = new ArrayList<Player>();
     ArrayList<Player> dead = new ArrayList<Player>();
     ArrayList<Player> quitter = new ArrayList<Player>();
+    ArrayList<Player> admin = new ArrayList<Player>();
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event)
@@ -75,8 +76,15 @@ public class MyPlayerListener implements Listener
         }
         else
         {
+            if(admin.contains(player))
+            {
+                player.sendMessage(ChatColor.RED + "You are in admin mode");
+            }
+            else
+            {
             player.setGameMode(GameMode.ADVENTURE);
             alive.add(player);
+            }
         }
     }
 
@@ -112,11 +120,12 @@ public class MyPlayerListener implements Listener
         alive.remove(player);
     }
 
+    @SuppressWarnings("deprecation")
     public void startGame()
     {
         for (int i = 0; i < alive.size(); i++)
         {
-            alive.get(i).setGameMode(GameMode.SURVIVAL);
+            Bukkit.getPlayer(alive.get(i).getName()).setGameMode(GameMode.SURVIVAL);
         }
         inProgress = true;
     }
@@ -130,7 +139,8 @@ public class MyPlayerListener implements Listener
     {
         for (int i = 0; i != alive.size(); i++)
         {
-            player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + i + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + alive.get(i).getName());
+            int num = i+1;
+            player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + num + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + alive.get(i).getName());
         }
         player.sendMessage(ChatColor.YELLOW + "" + (alive.size()) + ChatColor.DARK_AQUA + " remain");
     }

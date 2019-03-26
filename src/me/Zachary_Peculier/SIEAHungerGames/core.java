@@ -1,12 +1,10 @@
 package me.Zachary_Peculier.SIEAHungerGames;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.WorldBorder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,21 +14,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class core extends JavaPlugin
 {
     PluginDescriptionFile pdFile = this.getDescription();
-    public static core plugin;
     public boolean inProgress = false;
     public boolean timerGoing = false;
     public final Logger logger = Logger.getLogger("Minecraft");
     public final MyPlayerListener mpl = new MyPlayerListener();
-    ArrayList<Player> tributes = new ArrayList<Player>();
-
     @Override
     public void onEnable()
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been activated!");
         Bukkit.getWorld("world").setSpawnLocation(0, 72, 0);
         org.bukkit.plugin.PluginManager plm = this.getServer().getPluginManager();
-        plm.registerEvents(new MyPlayerListener(), this);
         plm.registerEvents(this.mpl, this);
+        
     }
 
     @Override
@@ -44,7 +39,6 @@ public class core extends JavaPlugin
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         Player player = (Player) sender;
-
         String command = commandLabel.toLowerCase();
         for (Player players : getServer().getOnlinePlayers())
             switch (command)
@@ -60,6 +54,7 @@ public class core extends JavaPlugin
                     {
                         player.sendMessage(ChatColor.RED + "No Permission!");
                     }
+                    break;
                 }
                 case "alive":
                     mpl.listPlayers(player);
@@ -105,7 +100,14 @@ public class core extends JavaPlugin
                             {
                                 int seconds = time % 60;
                                 int minutes = time / 60;
-                                player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
+                                if(seconds >= 11)
+                                {
+                                    player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
+                                }
+                                else
+                                {
+                                    player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":0" + seconds + " started!");
+                                }
                                 this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable()
                                 {
                                     int timer = time;
@@ -124,8 +126,7 @@ public class core extends JavaPlugin
                                             mpl.unfreezePlayers();
                                             Bukkit.broadcastMessage(ChatColor.RED + "Go!");
                                             Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
-                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes + ChatColor.DARK_AQUA + " paricipants");
-                                            Bukkit.broadcastMessage(ChatColor.GREEN + "Over the next hour, the border will be slowly shrinking to the center 32x32 blocks. ");
+                                            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + mpl.getTributeSize() + ChatColor.DARK_AQUA + " paricipants");
                                         }
                                         else if (timer > 60 && (timer % 60) == 0)
                                         {
