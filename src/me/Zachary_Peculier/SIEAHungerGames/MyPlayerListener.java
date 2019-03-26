@@ -74,6 +74,7 @@ public class MyPlayerListener implements Listener
             }
             else
             {
+                player.setGameMode(GameMode.SPECTATOR);
                 player.sendMessage(ChatColor.RED + "You aren't playing");
             }
         }
