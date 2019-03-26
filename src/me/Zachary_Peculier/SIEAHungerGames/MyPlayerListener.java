@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class MyPlayerListener implements Listener
 {
-   public static core plugin;
+    public static core plugin;
     public boolean inProgress = false;
     ArrayList<Player> alive = new ArrayList<Player>();
     ArrayList<Player> dead = new ArrayList<Player>();
@@ -57,6 +57,11 @@ public class MyPlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
+        if (admin.contains(player))
+        {
+            player.sendMessage(ChatColor.RED + "You are in admin mode");
+            return;
+        }
         if (inProgress)
         {
             if (quitter.contains(player))
@@ -74,18 +79,13 @@ public class MyPlayerListener implements Listener
                 player.sendMessage(ChatColor.RED + "You aren't playing");
             }
         }
+
         else
         {
-            if(admin.contains(player))
-            {
-                player.sendMessage(ChatColor.RED + "You are in admin mode");
-            }
-            else
-            {
             player.setGameMode(GameMode.ADVENTURE);
             alive.add(player);
-            }
         }
+
     }
 
     @EventHandler
@@ -99,7 +99,7 @@ public class MyPlayerListener implements Listener
             {
                 alive.remove(player);
                 Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected. and therefore forfeited the game!");
-                
+
                 Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining.");
                 quitter.add(player);
             }
@@ -120,12 +120,11 @@ public class MyPlayerListener implements Listener
         alive.remove(player);
     }
 
-    @SuppressWarnings("deprecation")
     public void startGame()
     {
         for (int i = 0; i < alive.size(); i++)
         {
-            Bukkit.getPlayer(alive.get(i).getName()).setGameMode(GameMode.SURVIVAL);
+            alive.get(i).setGameMode(GameMode.SURVIVAL);
         }
         inProgress = true;
     }
@@ -139,27 +138,9 @@ public class MyPlayerListener implements Listener
     {
         for (int i = 0; i != alive.size(); i++)
         {
-            int num = i+1;
+            int num = i + 1;
             player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + num + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + alive.get(i).getName());
         }
         player.sendMessage(ChatColor.YELLOW + "" + (alive.size()) + ChatColor.DARK_AQUA + " remain");
-    }
-
-    public void freezePlayers()
-    {
-        for (int i = 0; i == alive.size(); i++)
-        {
-            alive.get(i).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 60));
-        }
-
-    }
-
-    public void unfreezePlayers()
-    {
-        for(int i = 0; i == alive.size(); i++)
-        {
-            for (PotionEffect effect : alive.get(i).getActivePotionEffects())
-                alive.get(i).removePotionEffect(effect.getType());
-        }
     }
 }
