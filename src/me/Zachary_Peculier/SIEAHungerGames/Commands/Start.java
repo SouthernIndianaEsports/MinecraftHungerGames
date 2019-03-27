@@ -60,11 +60,6 @@ public class Start implements CommandExecutor
 
         if (isInt(args[0]))
         {
-            if (!plugin.timerGoing)
-            {
-                plugin.timerGoing = true;
-            }
-
             int time = Integer.parseInt(args[0]);
 
             if (time > 0)
@@ -79,13 +74,13 @@ public class Start implements CommandExecutor
                 {
                     player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":0" + seconds + " started!");
                 }
+                game.startTimer();
                 Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(this.plugin, new Runnable()
                 {
                     int timer = time;
 
                     public void run()
                     {
-                        game.startTimer();
                         if (timer == -1)
                         {
                             return;

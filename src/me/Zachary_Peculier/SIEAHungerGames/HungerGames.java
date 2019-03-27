@@ -16,8 +16,6 @@ public class HungerGames extends JavaPlugin
     PluginDescriptionFile pdFile = this.getDescription();
     public final Logger logger = Logger.getLogger("Minecraft");
     private Game game;
-    public boolean inProgress = false;
-    public boolean timerGoing = false;
 
     @Override
     public void onEnable()
