@@ -33,7 +33,7 @@ public class PlayerListener implements Listener
         Player player = event.getEntity();
         String player_name = player.getName();
 
-        if (!game.isPlaying(player))
+        if (!game.inGame(player) || game.getStatus() != GameStatus.STARTED)
         {
             return;
         }
@@ -56,6 +56,11 @@ public class PlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
+        
+        if (!game.inGame(player) && game.getStatus() != GameStatus.STARTED) {
+            game.addPlayer(player);
+        }
+        
         Tribute tribute = game.getTribute(player);
 
         if (tribute.getStatus() == TributeStatus.ADMIN)
@@ -83,11 +88,6 @@ public class PlayerListener implements Listener
             }
         }
 
-        else
-        {
-            game.addPlayer(player);
-        }
-
     }
 
     @EventHandler
@@ -97,7 +97,7 @@ public class PlayerListener implements Listener
         event.setQuitMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
         if (game.getStatus() == GameStatus.STARTED)
         {
-            if (game.isPlaying(player))
+            if (game.inGame(player))
             {
                 Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected. and therefore forfeited the game!");
                 Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");

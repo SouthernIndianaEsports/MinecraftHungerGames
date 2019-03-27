@@ -111,7 +111,7 @@ public class Game
         }
     }
 
-    public boolean isPlaying(Player player)
+    public boolean inGame(Player player)
     {
         Tribute tribute = getTribute(player);
         return tribute != null && tribute.getStatus() == TributeStatus.ALIVE;
