@@ -41,7 +41,7 @@ public class PlayerListener implements Listener
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
         game.removePlayer(player);
 
-        if (game.getNumPlayers() == 1)
+        if (game.getNumAlive() == 1)
         {
             game.end();
         }

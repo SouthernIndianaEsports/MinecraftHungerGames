@@ -26,9 +26,10 @@ public class Game
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes.size() + ChatColor.DARK_AQUA + " paricipants");
 
-        for (int i = 0; i < tributes.size(); i++)
+        for (int i = 0; i < tributes.size(); i++) //ensure everyone is set to alive and is in survival
         {
             tributes.get(i).setGameMode(GameMode.SURVIVAL);
+            tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
     }
 
@@ -45,10 +46,20 @@ public class Game
     public void end()
     {
         status = GameStatus.FINISHED;
+        
+        Tribute tribute = null;
+        for (int i = 0; i < tributes.size(); i++) { //find the last alive player
+            Tribute t = tributes.get(i);
+            if (t.getStatus() == TributeStatus.ALIVE) {
+                tribute = t;
+            }
+        }
+        
         for (int i = 0; i < 10; i++)
         {
-            Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS, " + tributes.get(0).getName() + "!!!!");
+            Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS, " + tribute.getName() + "!!!!");
         }
+        
         tributes.clear();
     }
 
@@ -69,6 +80,19 @@ public class Game
     public int getNumPlayers()
     {
         return tributes.size();
+    }
+    
+    public int getNumAlive() {
+        int number = 0;
+        
+        for (int i = 0; i < tributes.size(); i++) {
+            final Tribute tribute = tributes.get(i);
+            if (tribute.getStatus() == TributeStatus.ALIVE) {
+                number++;
+            }
+        }
+        
+        return number;
     }
 
     public void setPlayerStatus(Player player, TributeStatus status)
