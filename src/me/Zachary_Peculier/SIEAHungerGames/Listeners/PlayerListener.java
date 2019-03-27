@@ -3,9 +3,13 @@ package me.Zachary_Peculier.SIEAHungerGames.Listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -116,7 +120,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPvPDamage(EntityDamageEvent event)
     {
-        if (!inProgress)
+        if (game.getStatus() == GameStatus.WAITING)
         {
             event.setCancelled(true);
         }
