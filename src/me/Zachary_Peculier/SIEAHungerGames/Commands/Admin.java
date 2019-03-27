@@ -9,19 +9,22 @@ import org.bukkit.entity.Player;
 
 import me.Zachary_Peculier.SIEAHungerGames.Listeners.PlayerListener;
 
-public class Admin implements CommandExecutor {
-    
+public class Admin implements CommandExecutor
+{
+
     private final PlayerListener mpl;
 
-    public Admin(final PlayerListener playerListener) {
+    public Admin(final PlayerListener playerListener)
+    {
         this.mpl = playerListener;
     }
 
-	@Override
-	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-	    Player player = (Player) sender;
-	    
-	    if (player.hasPermission("siea.admin"))
+    @Override
+    public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
+    {
+        Player player = (Player) sender;
+
+        if (player.hasPermission("siea.admin"))
         {
             mpl.RemoveTrib(player);
             player.setGameMode(GameMode.CREATIVE);
@@ -30,8 +33,8 @@ public class Admin implements CommandExecutor {
         {
             player.sendMessage(ChatColor.RED + "No Permission!");
         }
-	    
-		return true;
-	}
+
+        return true;
+    }
 
 }

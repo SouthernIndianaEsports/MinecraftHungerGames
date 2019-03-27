@@ -10,16 +10,18 @@ import org.bukkit.entity.Player;
 import me.Zachary_Peculier.SIEAHungerGames.HungerGames;
 import me.Zachary_Peculier.SIEAHungerGames.Listeners.PlayerListener;
 
-public class Start implements CommandExecutor {
-    
+public class Start implements CommandExecutor
+{
+
     private final PlayerListener mpl;
     private final HungerGames plugin;
 
-    public Start(final PlayerListener playerListener, final HungerGames p) {
+    public Start(final PlayerListener playerListener, final HungerGames p)
+    {
         this.mpl = playerListener;
         this.plugin = p;
     }
-    
+
     private boolean isInt(String string)
     {
         try
@@ -32,12 +34,13 @@ public class Start implements CommandExecutor {
         }
     }
 
-	@SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")
     @Override
-	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-	    Player player = (Player) sender;
-	    
-	    if (player.hasPermission("siea.admin"))
+    public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
+    {
+        Player player = (Player) sender;
+
+        if (player.hasPermission("siea.admin"))
         {
             if (!plugin.inProgress)
 
@@ -133,7 +136,7 @@ public class Start implements CommandExecutor {
         {
             player.sendMessage(ChatColor.RED + "No Permission!");
         }
-		return true;
-	}
+        return true;
+    }
 
 }

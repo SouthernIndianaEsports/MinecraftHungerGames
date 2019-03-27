@@ -8,16 +8,19 @@ import org.bukkit.entity.Player;
 
 import me.Zachary_Peculier.SIEAHungerGames.Listeners.PlayerListener;
 
-public class Help implements CommandExecutor {
-    
+public class Help implements CommandExecutor
+{
+
     private final PlayerListener mpl;
 
-    public Help(final PlayerListener playerListener) {
+    public Help(final PlayerListener playerListener)
+    {
         this.mpl = playerListener;
     }
 
-	@Override
-	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
+    @Override
+    public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
+    {
         Player player = (Player) sender;
         player.sendMessage(ChatColor.GRAY + "Welcome to the Minecraft Hunger Games!");
         player.sendMessage(ChatColor.GRAY + "There are " + mpl.getTributeSize() + " players remaining");

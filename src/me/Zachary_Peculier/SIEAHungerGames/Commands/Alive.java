@@ -7,19 +7,22 @@ import org.bukkit.entity.Player;
 
 import me.Zachary_Peculier.SIEAHungerGames.Listeners.PlayerListener;
 
-public class Alive implements CommandExecutor {
-    
+public class Alive implements CommandExecutor
+{
+
     private final PlayerListener mpl;
 
-    public Alive(final PlayerListener playerListener) {
+    public Alive(final PlayerListener playerListener)
+    {
         this.mpl = playerListener;
     }
 
-	@Override
-	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-	    Player player = (Player) sender;
-	    mpl.listPlayers(player);
-		return true;
-	}
+    @Override
+    public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
+    {
+        Player player = (Player) sender;
+        mpl.listPlayers(player);
+        return true;
+    }
 
 }
