@@ -7,19 +7,22 @@ import org.bukkit.entity.Player;
 
 import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
 
-public class Alive implements CommandExecutor {
+public class Alive implements CommandExecutor
+{
 
     private final Game game;
 
-    public Alive(final Game g) {
+    public Alive(final Game g)
+    {
         this.game = g;
     }
 
-	@Override
-	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-	    Player player = (Player) sender;
-	    game.listPlayers(player);
-		return true;
-	}
+    @Override
+    public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
+    {
+        Player player = (Player) sender;
+        game.listPlayers(player);
+        return true;
+    }
 
 }
