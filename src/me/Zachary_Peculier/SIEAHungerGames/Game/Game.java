@@ -38,7 +38,7 @@ public class Game
 
         for (int i = 0; i < tributes.size(); i++)
         {
-            tributes.get(i).setGameMode(GameMode.SPECTATOR);
+            tributes.get(i).setGameMode(GameMode.ADVENTURE);
         }
     }
 
@@ -113,8 +113,7 @@ public class Game
 
     public boolean inGame(Player player)
     {
-        Tribute tribute = getTribute(player);
-        return tribute != null && tribute.getStatus() == TributeStatus.ALIVE;
+        return getTribute(player) != null;
     }
 
     public void listPlayers(Player player)

@@ -57,7 +57,7 @@ public class PlayerListener implements Listener
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
         
-        if (!game.inGame(player) && game.getStatus() != GameStatus.STARTED) {
+        if (!game.inGame(player)) {
             game.addPlayer(player);
         }
         
@@ -84,6 +84,7 @@ public class PlayerListener implements Listener
             else
             {
                 player.setGameMode(GameMode.SPECTATOR);
+                tribute.setStatus(TributeStatus.DEAD);
                 player.sendMessage(ChatColor.RED + "You aren't playing");
             }
         }
@@ -99,7 +100,7 @@ public class PlayerListener implements Listener
         {
             if (game.inGame(player))
             {
-                Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected. and therefore forfeited the game!");
+                Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected and therefore forfeited the game!");
                 Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");
             }
         }
