@@ -32,7 +32,8 @@ public class Start implements CommandExecutor {
         }
     }
 
-	@Override
+	@SuppressWarnings("deprecation")
+    @Override
 	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 	    Player player = (Player) sender;
 	    
@@ -68,7 +69,7 @@ public class Start implements CommandExecutor {
                 {
                     int seconds = time % 60;
                     int minutes = time / 60;
-                    if (seconds >= 11)
+                    if (seconds >= 10)
                     {
                         player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
                     }
