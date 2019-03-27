@@ -30,27 +30,29 @@ public class PlayerListener implements Listener
     {
         Player player = event.getEntity();
         String player_name = player.getName();
-
-        if (!alive.contains(player))
+        if (inProgress)
         {
-            return;
-        }
-
-        event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
-        player.setGameMode(GameMode.SPECTATOR);
-        RemoveTrib(player);
-        dead.add(player);
-
-        if (alive.size() == 1)
-        {
-            for (int i = 0; i < 10; i++)
+            if (!alive.contains(player))
             {
-                Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS, " + alive.get(0).getName() + "!!!!");
+                return;
             }
-        }
-        else
-        {
-            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining.");
+
+            event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
+            player.setGameMode(GameMode.SPECTATOR);
+            RemoveTrib(player);
+            dead.add(player);
+
+            if (alive.size() == 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS, " + alive.get(0).getName() + "!!!!");
+                }
+            }
+            else
+            {
+                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining.");
+            }
         }
     }
 
