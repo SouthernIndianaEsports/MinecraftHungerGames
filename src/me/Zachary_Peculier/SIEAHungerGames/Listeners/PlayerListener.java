@@ -1,7 +1,5 @@
 package me.Zachary_Peculier.SIEAHungerGames.Listeners;
 
-import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -12,44 +10,40 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import me.Zachary_Peculier.SIEAHungerGames.HungerGames;
+import me.Zachary_Peculier.SIEAHungerGames.Game.*;
 
 public class PlayerListener implements Listener
 {
 
-    public static HungerGames plugin;
     public boolean inProgress = false;
-    ArrayList<Player> alive = new ArrayList<Player>();
-    ArrayList<Player> dead = new ArrayList<Player>();
-    ArrayList<Player> quitter = new ArrayList<Player>();
-    ArrayList<Player> admin = new ArrayList<Player>();
 
+    private final Game game;
+
+    public PlayerListener(final Game g) {
+        this.game = g;
+    }
+    
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event)
     {
         Player player = event.getEntity();
         String player_name = player.getName();
 
-        if (!alive.contains(player))
+        if (!game.isPlaying(player))
         {
             return;
         }
 
         event.setDeathMessage(ChatColor.YELLOW + player_name + ChatColor.DARK_AQUA + " has been killed!");
         player.setGameMode(GameMode.SPECTATOR);
-        RemoveTrib(player);
-        dead.add(player);
 
-        if (alive.size() == 1)
+        if (game.getNumPlayers() == 1)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS, " + alive.get(0).getName() + "!!!!");
-            }
+            game.end();
         }
         else
         {
-            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining.");
+            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");
         }
     }
 
@@ -58,19 +52,22 @@ public class PlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
-        if (admin.contains(player))
+        Tribute tribute = game.getTribute(player);
+        
+        if (tribute.getStatus() == TributeStatus.ADMIN)
         {
             player.sendMessage(ChatColor.RED + "You are in admin mode");
             return;
         }
-        if (inProgress)
+        
+        if (game.getStatus() == GameStatus.STARTED)
         {
-            if (quitter.contains(player))
+            if (tribute.getStatus() == TributeStatus.QUIT)
             {
                 player.sendMessage(ChatColor.RED + "You have disconnected mid game and have been disqualified.");
                 player.setGameMode(GameMode.SPECTATOR);
             }
-            else if (dead.contains(player))
+            else if (tribute.getStatus() == TributeStatus.DEAD)
             {
                 player.sendMessage(ChatColor.RED + "You are dead");
                 player.setGameMode(GameMode.SPECTATOR);
@@ -84,8 +81,7 @@ public class PlayerListener implements Listener
 
         else
         {
-            player.setGameMode(GameMode.ADVENTURE);
-            alive.add(player);
+            game.addPlayer(player);
         }
 
     }
@@ -95,54 +91,15 @@ public class PlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setQuitMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
-        if (!inProgress)
+        if (game.getStatus() == GameStatus.STARTED)
         {
-            if (alive.contains(player))
+            if (game.isPlaying(player))
             {
-                alive.remove(player);
                 Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected. and therefore forfeited the game!");
-
-                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + alive.size() + ChatColor.DARK_AQUA + " players remaining.");
-                quitter.add(player);
+                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");
             }
         }
-        else
-        {
-            alive.remove(player);
-        }
-    }
 
-    public void addTrib(Player player)
-    {
-        alive.add(player);
-    }
-
-    public void RemoveTrib(Player player)
-    {
-        alive.remove(player);
-    }
-
-    public void startGame()
-    {
-        for (int i = 0; i < alive.size(); i++)
-        {
-            alive.get(i).setGameMode(GameMode.SURVIVAL);
-        }
-        inProgress = true;
-    }
-
-    public int getTributeSize()
-    {
-        return alive.size();
-    }
-
-    public void listPlayers(Player player)
-    {
-        for (int i = 0; i != alive.size(); i++)
-        {
-            int num = i + 1;
-            player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + num + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + alive.get(i).getName());
-        }
-        player.sendMessage(ChatColor.YELLOW + "" + (alive.size()) + ChatColor.DARK_AQUA + " remain");
+        game.removePlayer(player);
     }
 }

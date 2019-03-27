@@ -5,20 +5,20 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.Zachary_Peculier.SIEAHungerGames.Listeners.PlayerListener;
+import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
 
 public class Who implements CommandExecutor {
     
-    private final PlayerListener mpl;
+    private final Game game;
 
-    public Who(final PlayerListener playerListener) {
-        this.mpl = playerListener;
+    public Who(final Game g) {
+        this.game = g;
     }
 
 	@Override
 	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 	    Player player = (Player) sender;
-        mpl.listPlayers(player);
+        game.listPlayers(player);
 		return true;
 	}
 

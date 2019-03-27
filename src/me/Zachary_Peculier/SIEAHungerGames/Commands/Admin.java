@@ -7,14 +7,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.Zachary_Peculier.SIEAHungerGames.Listeners.PlayerListener;
+import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
+import me.Zachary_Peculier.SIEAHungerGames.Game.TributeStatus;
 
 public class Admin implements CommandExecutor {
     
-    private final PlayerListener mpl;
+    private final Game game;
 
-    public Admin(final PlayerListener playerListener) {
-        this.mpl = playerListener;
+    public Admin(final Game g) {
+        this.game = g;
     }
 
 	@Override
@@ -23,8 +24,8 @@ public class Admin implements CommandExecutor {
 	    
 	    if (player.hasPermission("siea.admin"))
         {
-            mpl.RemoveTrib(player);
-            player.setGameMode(GameMode.CREATIVE);
+	        game.setPlayerStatus(player, TributeStatus.ADMIN);
+	        game.setPlayerMode(player, GameMode.CREATIVE);
         }
         else
         {
