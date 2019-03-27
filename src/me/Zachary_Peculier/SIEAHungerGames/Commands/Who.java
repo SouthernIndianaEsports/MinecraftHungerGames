@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package me.Zachary_Peculier.SIEAHungerGames.Commands;
 
 import org.bukkit.command.Command;
@@ -53,4 +52,3 @@ public class Who implements CommandExecutor
     }
 
 }
->>>>>>> 669535ce77d6a990fb0dd6ba0988f97d49413a5e
