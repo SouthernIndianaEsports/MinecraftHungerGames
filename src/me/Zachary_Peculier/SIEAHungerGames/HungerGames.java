@@ -29,6 +29,7 @@ public class HungerGames extends JavaPlugin
         getCommand("who").setExecutor(new Who(mpl));
         getCommand("admin").setExecutor(new Admin(mpl));
         getCommand("start").setExecutor(new Start(mpl, this));
+        getCommand("say").setExecutor(new Help(mpl));
     }
 
     @Override
