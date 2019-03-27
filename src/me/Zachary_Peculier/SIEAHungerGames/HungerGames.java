@@ -16,6 +16,7 @@ public class HungerGames extends JavaPlugin
     public final PlayerListener mpl = new PlayerListener();
     public boolean inProgress = false;
     public boolean timerGoing = false;
+    
 
     @Override
     public void onEnable()
