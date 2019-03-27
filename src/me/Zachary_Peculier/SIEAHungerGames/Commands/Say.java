@@ -11,9 +11,6 @@ import me.Zachary_Peculier.SIEAHungerGames.Listeners.PlayerListener;
 
 public class Say implements CommandExecutor
 {
-    public Say(final PlayerListener playerListener)
-    {
-    }
 
     @Override
     public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
