@@ -11,7 +11,7 @@ import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
 import me.Zachary_Peculier.SIEAHungerGames.Game.TributeStatus;
 
 public class Admin implements CommandExecutor {
-    
+
     private final Game game;
 
     public Admin(final Game g) {
@@ -21,7 +21,7 @@ public class Admin implements CommandExecutor {
 	@Override
 	public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 	    Player player = (Player) sender;
-	    
+
 	    if (player.hasPermission("siea.admin"))
         {
 	        game.setPlayerStatus(player, TributeStatus.ADMIN);
@@ -31,7 +31,7 @@ public class Admin implements CommandExecutor {
         {
             player.sendMessage(ChatColor.RED + "No Permission!");
         }
-	    
+
 		return true;
 	}
 

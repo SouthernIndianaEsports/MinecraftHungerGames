@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class HungerGames extends JavaPlugin
 {
-    
+
     PluginDescriptionFile pdFile = this.getDescription();
     public final Logger logger = Logger.getLogger("Minecraft");
     private Game game;
@@ -24,17 +24,18 @@ public class HungerGames extends JavaPlugin
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been activated!");
         Bukkit.getWorld("world").setSpawnLocation(0, 72, 0);
-        
+
         game = new Game();
-        
+
         PluginManager plm = this.getServer().getPluginManager();
         plm.registerEvents(new PlayerListener(game), this);
-        
+
         getCommand("help").setExecutor(new Help(game));
         getCommand("alive").setExecutor(new Alive(game));
         getCommand("who").setExecutor(new Who(game));
         getCommand("admin").setExecutor(new Admin(game));
         getCommand("start").setExecutor(new Start(this, game));
+        getCommand("say").setExecutor(new Say(mpl));
     }
 
     @Override

@@ -22,7 +22,7 @@ public class PlayerListener implements Listener
     public PlayerListener(final Game g) {
         this.game = g;
     }
-    
+
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event)
     {
@@ -53,13 +53,13 @@ public class PlayerListener implements Listener
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
         Tribute tribute = game.getTribute(player);
-        
+
         if (tribute.getStatus() == TributeStatus.ADMIN)
         {
             player.sendMessage(ChatColor.RED + "You are in admin mode");
             return;
         }
-        
+
         if (game.getStatus() == GameStatus.STARTED)
         {
             if (tribute.getStatus() == TributeStatus.QUIT)
@@ -101,5 +101,24 @@ public class PlayerListener implements Listener
         }
 
         game.removePlayer(player);
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event)
+    {
+        Block block = event.getBlock();
+        if(block.getType() == Material.GLASS)
+        {
+            event.setCancelled(true);
+        }
+    }
+    
+    @EventHandler
+    public void onPvPDamage(EntityDamageEvent event)
+    {
+        if (!inProgress)
+        {
+            event.setCancelled(true);
+        }
     }
 }

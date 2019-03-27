@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
 
 public class Help implements CommandExecutor {
-    
+
     private final Game game;
 
     public Help(final Game g) {

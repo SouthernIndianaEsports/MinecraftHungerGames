@@ -64,9 +64,9 @@ public class Start implements CommandExecutor
             {
                 plugin.timerGoing = true;
             }
-            
+
             int time = Integer.parseInt(args[0]);
-            
+
             if (time > 0)
             {
                 int seconds = time % 60;

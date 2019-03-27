@@ -18,6 +18,9 @@ commands:
   admin:
     description: admin mode
     usage: /<command>
+  say:
+    description: Broadcast message
+    usage: /<command>
 permissions:
   siea.admin:
      description: Admin perms
