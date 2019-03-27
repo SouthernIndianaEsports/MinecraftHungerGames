@@ -12,6 +12,7 @@ public class Game
 
     private GameStatus status = GameStatus.DISABLED;
     private ArrayList<Tribute> tributes = new ArrayList<Tribute>();
+    private ArrayList<Player> admins = new ArrayList<Player>();
 
     public GameStatus getStatus()
     {
@@ -40,6 +41,7 @@ public class Game
         for (int i = 0; i < tributes.size(); i++)
         {
             tributes.get(i).setGameMode(GameMode.ADVENTURE);
+            tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
     }
 
@@ -133,6 +135,35 @@ public class Game
                 tributes.get(i).setGameMode(GameMode.SPECTATOR);
             }
         }
+    }
+    
+    public void deletePlayer(Player player) {
+        Tribute tribute = this.getTribute(player);
+        if (tribute == null) {
+            return;
+        }
+        
+        tributes.remove(tribute);
+    }
+    
+    public void addAdmin(Player player) {
+        admins.add(player);
+        player.setGameMode(GameMode.CREATIVE);
+    }
+    
+    public boolean isAdmin(Player player) {
+        for (int i = 0; i < admins.size(); i++) {
+            if (admins.get(i) == player) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public void removeAdmin(Player player) {
+        admins.remove(player);
+        player.setGameMode(GameMode.SURVIVAL);
     }
 
     public boolean inGame(Player player)

@@ -33,7 +33,7 @@ public class PlayerListener implements Listener
         Player player = event.getEntity();
         String player_name = player.getName();
 
-        if (!game.inGame(player) || game.getStatus() != GameStatus.STARTED)
+        if (!game.inGame(player) || game.getStatus() != GameStatus.STARTED || game.isAdmin(player))
         {
             return;
         }
@@ -63,7 +63,7 @@ public class PlayerListener implements Listener
         
         Tribute tribute = game.getTribute(player);
 
-        if (tribute.getStatus() == TributeStatus.ADMIN)
+        if (game.isAdmin(player))
         {
             player.sendMessage(ChatColor.RED + "You are in admin mode");
             return;

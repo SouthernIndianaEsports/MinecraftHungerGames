@@ -5,5 +5,4 @@ public enum TributeStatus
     ALIVE,
     DEAD,
     QUIT,
-    ADMIN
 }
