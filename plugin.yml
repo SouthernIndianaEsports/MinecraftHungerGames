@@ -1,5 +1,5 @@
 name: SIEAHungerGames
-main: me.Zachary_Peculier.SIEAHungerGames.core
+main: me.Zachary_Peculier.SIEAHungerGames.HungerGames
 author: Zachary_Peculier and endoffile
 version: 1.3
 commands:
