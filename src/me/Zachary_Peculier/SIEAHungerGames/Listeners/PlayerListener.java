@@ -19,11 +19,10 @@ import me.Zachary_Peculier.SIEAHungerGames.Game.*;
 public class PlayerListener implements Listener
 {
 
-    public boolean inProgress = false;
-
     private final Game game;
 
-    public PlayerListener(final Game g) {
+    public PlayerListener(final Game g)
+    {
         this.game = g;
     }
 
@@ -56,11 +55,12 @@ public class PlayerListener implements Listener
     {
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
-        
-        if (!game.inGame(player)) {
+
+        if (!game.inGame(player))
+        {
             game.addPlayer(player);
         }
-        
+
         Tribute tribute = game.getTribute(player);
 
         if (game.isAdmin(player))
@@ -95,16 +95,15 @@ public class PlayerListener implements Listener
     public void onPlayerLeave(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
+        
         event.setQuitMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
-        if (game.getStatus() == GameStatus.STARTED)
+        
+        if (game.getStatus() == GameStatus.STARTED && game.inGame(player))
         {
-            if (game.inGame(player))
-            {
-                Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected and therefore forfeited the game!");
-                Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");
-            }
+            Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected and therefore forfeited the game!");
+            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");
         }
-
+        
         game.removePlayer(player);
     }
 
@@ -112,16 +111,16 @@ public class PlayerListener implements Listener
     public void onBlockBreak(BlockBreakEvent event)
     {
         Block block = event.getBlock();
-        if(block.getType() == Material.GLASS)
+        if (block.getType() == Material.GLASS)
         {
             event.setCancelled(true);
         }
     }
-    
+
     @EventHandler
     public void onPvPDamage(EntityDamageEvent event)
     {
-        if (game.getStatus() == GameStatus.WAITING)
+        if (game.getStatus() == GameStatus.WAITING || game.getStatus() == GameStatus.FINISHED)
         {
             event.setCancelled(true);
         }
