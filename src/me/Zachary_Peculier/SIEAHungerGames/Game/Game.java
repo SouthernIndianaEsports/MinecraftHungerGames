@@ -32,6 +32,8 @@ public class Game
             tributes.get(i).setGameMode(GameMode.SURVIVAL);
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
+        
+        Bukkit.getWorld("world").setTime(0);
     }
 
     public void startTimer()
