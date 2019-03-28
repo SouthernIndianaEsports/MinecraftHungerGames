@@ -27,12 +27,13 @@ public class Game
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes.size() + ChatColor.DARK_AQUA + " paricipants");
 
-        for (int i = 0; i < tributes.size(); i++) //ensure everyone is set to alive and is in survival
+        for (int i = 0; i < tributes.size(); i++) // ensure everyone is set to
+                                                  // alive and is in survival
         {
             tributes.get(i).setGameMode(GameMode.SURVIVAL);
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
-        
+
         Bukkit.getWorld("world").setTime(0);
     }
 
@@ -50,20 +51,22 @@ public class Game
     public void end()
     {
         status = GameStatus.FINISHED;
-        
+
         Tribute tribute = null;
-        for (int i = 0; i < tributes.size(); i++) { //find the last alive player
+        for (int i = 0; i < tributes.size(); i++)
+        { // find the last alive player
             Tribute t = tributes.get(i);
-            if (t.getStatus() == TributeStatus.ALIVE) {
+            if (t.getStatus() == TributeStatus.ALIVE)
+            {
                 tribute = t;
             }
         }
-        
+
         for (int i = 0; i < 10; i++)
         {
             Bukkit.broadcastMessage(ChatColor.RED + "GAME OVER! WE HAVE A WINNER! CONGRATULATIONS, " + tribute.getName() + "!!!!");
         }
-        
+
         tributes.clear();
     }
 
@@ -85,17 +88,20 @@ public class Game
     {
         return tributes.size();
     }
-    
-    public int getNumAlive() {
+
+    public int getNumAlive()
+    {
         int number = 0;
-        
-        for (int i = 0; i < tributes.size(); i++) {
+
+        for (int i = 0; i < tributes.size(); i++)
+        {
             final Tribute tribute = tributes.get(i);
-            if (tribute.getStatus() == TributeStatus.ALIVE) {
+            if (tribute.getStatus() == TributeStatus.ALIVE)
+            {
                 number++;
             }
         }
-        
+
         return number;
     }
 
@@ -109,7 +115,7 @@ public class Game
 
         tribute.setStatus(status);
     }
-    
+
     public void setPlayerMode(Player player, GameMode mode)
     {
         Tribute tribute = this.getTribute(player);
@@ -131,39 +137,48 @@ public class Game
 
     public void removePlayer(Player player)
     {
-        for (int i = 0; i < tributes.size(); i++) {
-            if (tributes.get(i).getPlayer() == player) {
+        for (int i = 0; i < tributes.size(); i++)
+        {
+            if (tributes.get(i).getPlayer() == player)
+            {
                 tributes.get(i).setStatus(TributeStatus.DEAD);
                 tributes.get(i).setGameMode(GameMode.SPECTATOR);
             }
         }
     }
-    
-    public void deletePlayer(Player player) {
+
+    public void deletePlayer(Player player)
+    {
         Tribute tribute = this.getTribute(player);
-        if (tribute == null) {
+        if (tribute == null)
+        {
             return;
         }
-        
+
         tributes.remove(tribute);
     }
-    
-    public void addAdmin(Player player) {
+
+    public void addAdmin(Player player)
+    {
         admins.add(player);
         player.setGameMode(GameMode.CREATIVE);
     }
-    
-    public boolean isAdmin(Player player) {
-        for (int i = 0; i < admins.size(); i++) {
-            if (admins.get(i) == player) {
+
+    public boolean isAdmin(Player player)
+    {
+        for (int i = 0; i < admins.size(); i++)
+        {
+            if (admins.get(i) == player)
+            {
                 return true;
             }
         }
-        
+
         return false;
     }
-    
-    public void removeAdmin(Player player) {
+
+    public void removeAdmin(Player player)
+    {
         admins.remove(player);
         player.setGameMode(GameMode.SURVIVAL);
     }
@@ -172,13 +187,15 @@ public class Game
     {
         return getTribute(player) != null;
     }
-    
-    public boolean isPlayerAlive(Player player) {
+
+    public boolean isPlayerAlive(Player player)
+    {
         Tribute tribute = this.getTribute(player);
-        if (tribute == null) {
+        if (tribute == null)
+        {
             return false;
         }
-        
+
         return tribute.getStatus() == TributeStatus.ALIVE;
     }
 

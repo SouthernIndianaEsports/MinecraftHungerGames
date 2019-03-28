@@ -21,7 +21,7 @@ public class HungerGames extends JavaPlugin
     public void onEnable()
     {
         this.logger.info(pdFile.getName() + " " + pdFile.getVersion() + " has been activated!");
-        Bukkit.getWorld("world").setSpawnLocation(0, 72, 0);
+        Bukkit.getWorld("world").setSpawnLocation(-8, 156, 10);
 
         game = new Game();
 
