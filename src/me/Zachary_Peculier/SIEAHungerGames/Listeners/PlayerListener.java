@@ -46,7 +46,7 @@ public class PlayerListener implements Listener
         }
         else
         {
-            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");
+            Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumAlive() + ChatColor.DARK_AQUA + " players remaining.");
         }
     }
 
@@ -56,18 +56,23 @@ public class PlayerListener implements Listener
         Player player = event.getPlayer();
         event.setJoinMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged in!");
 
-        if (!game.inGame(player))
-        {
-            game.addPlayer(player);
-        }
-
-        Tribute tribute = game.getTribute(player);
-
         if (game.isAdmin(player))
         {
             player.sendMessage(ChatColor.RED + "You are in admin mode");
             return;
         }
+
+        if (!game.inGame(player))
+        {
+            game.addPlayer(player);
+            if (game.getStatus() == GameStatus.STARTED) {
+                Tribute t = game.getTribute(player);
+                t.setStatus(TributeStatus.DEAD);
+                player.setGameMode(GameMode.SPECTATOR);
+            }
+        }
+
+        Tribute tribute = game.getTribute(player);
 
         if (game.getStatus() == GameStatus.STARTED)
         {
@@ -98,7 +103,7 @@ public class PlayerListener implements Listener
         
         event.setQuitMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
         
-        if (game.getStatus() == GameStatus.STARTED && game.inGame(player))
+        if (game.getStatus() == GameStatus.STARTED && game.isPlayerAlive(player))
         {
             Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected and therefore forfeited the game!");
             Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");

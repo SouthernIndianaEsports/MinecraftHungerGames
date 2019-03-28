@@ -172,6 +172,15 @@ public class Game
     {
         return getTribute(player) != null;
     }
+    
+    public boolean isPlayerAlive(Player player) {
+        Tribute tribute = this.getTribute(player);
+        if (tribute == null) {
+            return false;
+        }
+        
+        return tribute.getStatus() == TributeStatus.ALIVE;
+    }
 
     public void listPlayers(Player player)
     {
@@ -180,6 +189,6 @@ public class Game
             int num = i + 1;
             player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + num + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + tributes.get(i).getName());
         }
-        player.sendMessage(ChatColor.YELLOW + "" + (tributes.size()) + ChatColor.DARK_AQUA + " remain");
+        player.sendMessage(ChatColor.YELLOW + "" + this.getNumAlive() + ChatColor.DARK_AQUA + " remain");
     }
 }
