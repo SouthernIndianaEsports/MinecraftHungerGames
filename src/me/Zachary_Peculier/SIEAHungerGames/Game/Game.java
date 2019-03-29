@@ -47,7 +47,6 @@ public class Game
         }
 
         Bukkit.getWorld("world").setTime(0);
-        /*
         for (Chunk c : Bukkit.getWorld("world").getLoadedChunks())
         {
 
@@ -79,7 +78,6 @@ public class Game
                 }
             }
         }
-        */
     }
 
     public void startTimer()

@@ -39,7 +39,7 @@ class Timer
                     time--;
                     return;
                 }
-                
+
                 if ((time % 30) == 0 && time >= 60)
                 {
                     Bukkit.broadcastMessage("Time remaining: " + time);
@@ -124,10 +124,11 @@ public class Start implements CommandExecutor
             return true;
         }
 
-        /*
-         * if (game.getNumPlayers() < 2) { player.sendMessage(ChatColor.RED +
-         * "There must be at least 2 players to start the game."); return true; }
-         */
+        if (game.getNumPlayers() < 2)
+        {
+            player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
+            return true;
+        }
 
         if (args.length != 1)
         {
