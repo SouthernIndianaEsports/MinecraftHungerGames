@@ -27,7 +27,8 @@ public class Game
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes.size() + ChatColor.DARK_AQUA + " paricipants");
 
-        for (int i = 0; i < tributes.size(); i++) //ensure everyone is set to alive and is in survival
+        for (int i = 0; i < tributes.size(); i++) // ensure everyone is set to
+                                                  // alive and is in survival
         {
             tributes.get(i).setGameMode(GameMode.SURVIVAL);
             tributes.get(i).setStatus(TributeStatus.ALIVE);
@@ -52,9 +53,11 @@ public class Game
         status = GameStatus.FINISHED;
 
         Tribute tribute = null;
-        for (int i = 0; i < tributes.size(); i++) { //find the last alive player
+        for (int i = 0; i < tributes.size(); i++)
+        { // find the last alive player
             Tribute t = tributes.get(i);
-            if (t.getStatus() == TributeStatus.ALIVE) {
+            if (t.getStatus() == TributeStatus.ALIVE)
+            {
                 tribute = t;
             }
         }
@@ -86,12 +89,15 @@ public class Game
         return tributes.size();
     }
 
-    public int getNumAlive() {
+    public int getNumAlive()
+    {
         int number = 0;
 
-        for (int i = 0; i < tributes.size(); i++) {
+        for (int i = 0; i < tributes.size(); i++)
+        {
             final Tribute tribute = tributes.get(i);
-            if (tribute.getStatus() == TributeStatus.ALIVE) {
+            if (tribute.getStatus() == TributeStatus.ALIVE)
+            {
                 number++;
             }
         }
@@ -134,8 +140,10 @@ public class Game
      */
     public void removePlayer(Player player)
     {
-        for (int i = 0; i < tributes.size(); i++) {
-            if (tributes.get(i).getPlayer() == player) {
+        for (int i = 0; i < tributes.size(); i++)
+        {
+            if (tributes.get(i).getPlayer() == player)
+            {
                 tributes.get(i).setStatus(TributeStatus.DEAD);
                 tributes.get(i).setGameMode(GameMode.SPECTATOR);
             }
@@ -145,23 +153,29 @@ public class Game
     /*
      * Removes player from game completely
      */
-    public void deletePlayer(Player player) {
+    public void deletePlayer(Player player)
+    {
         Tribute tribute = this.getTribute(player);
-        if (tribute == null) {
+        if (tribute == null)
+        {
             return;
         }
 
         tributes.remove(tribute);
     }
 
-    public void addAdmin(Player player) {
+    public void addAdmin(Player player)
+    {
         admins.add(player);
         player.setGameMode(GameMode.CREATIVE);
     }
 
-    public boolean isAdmin(Player player) {
-        for (int i = 0; i < admins.size(); i++) {
-            if (admins.get(i) == player) {
+    public boolean isAdmin(Player player)
+    {
+        for (int i = 0; i < admins.size(); i++)
+        {
+            if (admins.get(i) == player)
+            {
                 return true;
             }
         }
@@ -169,7 +183,8 @@ public class Game
         return false;
     }
 
-    public void removeAdmin(Player player) {
+    public void removeAdmin(Player player)
+    {
         admins.remove(player);
         player.setGameMode(GameMode.SURVIVAL);
     }
@@ -179,9 +194,11 @@ public class Game
         return getTribute(player) != null;
     }
 
-    public boolean isPlayerAlive(Player player) {
+    public boolean isPlayerAlive(Player player)
+    {
         Tribute tribute = this.getTribute(player);
-        if (tribute == null) {
+        if (tribute == null)
+        {
             return false;
         }
 
@@ -193,7 +210,8 @@ public class Game
         for (int i = 0; i != tributes.size(); i++)
         {
             final Tribute tribute = tributes.get(i);
-            if (tribute.getStatus() != TributeStatus.ALIVE) { //only list people who are alive
+            if (tribute.getStatus() != TributeStatus.ALIVE)
+            { // only list people who are alive
                 continue;
             }
             int num = i + 1;

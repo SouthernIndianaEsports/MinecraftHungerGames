@@ -65,7 +65,8 @@ public class PlayerListener implements Listener
         if (!game.inGame(player))
         {
             game.addPlayer(player);
-            if (game.getStatus() == GameStatus.STARTED) {
+            if (game.getStatus() == GameStatus.STARTED)
+            {
                 Tribute t = game.getTribute(player);
                 t.setStatus(TributeStatus.DEAD);
                 player.setGameMode(GameMode.SPECTATOR);
@@ -100,15 +101,15 @@ public class PlayerListener implements Listener
     public void onPlayerLeave(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-        
+
         event.setQuitMessage(ChatColor.GREEN + player.getName() + ChatColor.RESET + " / " + ChatColor.DARK_GRAY + "has logged out!");
-        
+
         if (game.getStatus() == GameStatus.STARTED && game.isPlayerAlive(player))
         {
             Bukkit.broadcastMessage(ChatColor.YELLOW + player.getName() + ChatColor.DARK_AQUA + " has disconnected and therefore forfeited the game!");
             Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + game.getNumPlayers() + ChatColor.DARK_AQUA + " players remaining.");
         }
-        
+
         game.removePlayer(player);
     }
 
