@@ -30,7 +30,7 @@ public class Admin implements CommandExecutor
         }
         
         game.addAdmin(player);
-        game.removePlayer(player);
+        game.deletePlayer(player);
 
         return true;
     }

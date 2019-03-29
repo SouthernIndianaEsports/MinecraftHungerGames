@@ -129,6 +129,9 @@ public class Game
         tributes.add(tribute);
     }
 
+    /*
+     * Sets the player as dead and makes them spectator
+     */
     public void removePlayer(Player player)
     {
         for (int i = 0; i < tributes.size(); i++) {
@@ -139,6 +142,9 @@ public class Game
         }
     }
 
+    /*
+     * Removes player from game completely
+     */
     public void deletePlayer(Player player) {
         Tribute tribute = this.getTribute(player);
         if (tribute == null) {
@@ -194,5 +200,6 @@ public class Game
             player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + num + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + tribute.getName());
         }
         player.sendMessage(ChatColor.YELLOW + "" + this.getNumAlive() + ChatColor.DARK_AQUA + " remain");
+        player.sendMessage(ChatColor.YELLOW + "" + this.getNumPlayers() + ChatColor.DARK_AQUA + " in total.");
     }
 }
