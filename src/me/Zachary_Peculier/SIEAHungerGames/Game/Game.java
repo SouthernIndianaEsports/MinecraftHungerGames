@@ -20,6 +20,7 @@ public class Game
     private GameStatus status = GameStatus.WAITING;
     private ArrayList<Tribute> tributes = new ArrayList<Tribute>();
     private ArrayList<Player> admins = new ArrayList<Player>();
+    private boolean frozen = false;
 
     public GameStatus getStatus()
     {
@@ -78,7 +79,7 @@ public class Game
     public void startTimer()
     {
         status = GameStatus.WAITING;
-
+        frozen = false;
         for (int i = 0; i < tributes.size(); i++)
         {
             if (tributes.get(i).getStatus() == TributeStatus.QUIT) {
@@ -270,5 +271,13 @@ public class Game
         }
         player.sendMessage(ChatColor.YELLOW + "" + this.getNumAlive() + ChatColor.DARK_AQUA + " remain");
         player.sendMessage(ChatColor.YELLOW + "" + this.getNumPlayers() + ChatColor.DARK_AQUA + " in total.");
+    }
+    
+    public boolean getFrozen(){
+        return frozen;
+    }
+    
+    public void setFrozen(boolean f){
+        this.frozen = f;
     }
 }

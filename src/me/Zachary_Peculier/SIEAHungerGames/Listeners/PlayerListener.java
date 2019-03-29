@@ -20,7 +20,6 @@ import me.Zachary_Peculier.SIEAHungerGames.Game.*;
 
 public class PlayerListener implements Listener
 {
-    public boolean frozen = false;
     private final Game game;
 
     public PlayerListener(final Game g)
@@ -146,9 +145,10 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (!frozen)
+        if (game.getFrozen())
         {
             event.setCancelled(true);
         }
     }
+
 }
