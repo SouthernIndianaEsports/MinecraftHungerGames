@@ -89,6 +89,7 @@ public class Start implements CommandExecutor
                         if (timer == 0)
                         {
                             game.startGame();
+                            game.setFrozen(false);
                         }
                         else if (timer > 60 && (timer % 60) == 0)
                         {
