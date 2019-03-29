@@ -127,9 +127,12 @@ public class PlayerListener implements Listener
     public void onBlockBreak(BlockBreakEvent event)
     {
         Block block = event.getBlock();
-        if (block.getType() == Material.GLASS || game.getStatus() == GameStatus.WAITING)
+        if ((block.getType() == Material.GLASS || game.getStatus() == GameStatus.WAITING))
         {
-            event.setCancelled(true);
+            if (!game.isAdmin(event.getPlayer()))
+            {
+                event.setCancelled(true);
+            }
         }
     }
 
