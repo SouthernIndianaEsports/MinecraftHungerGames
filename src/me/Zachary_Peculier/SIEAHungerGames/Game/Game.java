@@ -85,7 +85,6 @@ public class Game
                 continue;
             }
             
-            tributes.get(i).setGameMode(GameMode.ADVENTURE);
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
     }
