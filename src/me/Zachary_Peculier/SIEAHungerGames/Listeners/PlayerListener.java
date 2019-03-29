@@ -13,13 +13,14 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import me.Zachary_Peculier.SIEAHungerGames.Game.*;
 
 public class PlayerListener implements Listener
 {
-
+    public boolean frozen = false;
     private final Game game;
 
     public PlayerListener(final Game g)
@@ -70,13 +71,14 @@ public class PlayerListener implements Listener
         }
 
         Tribute tribute = game.getTribute(player);
-        if (tribute == null) {
+        if (tribute == null)
+        {
             Bukkit.getLogger().log(Level.INFO, "Could not find " + player.getName() + ", this shoudln't happen");
             return;
         }
-        
+
         tribute.updatePlayer(player);
-        
+
         if (game.getStatus() == GameStatus.STARTED)
         {
             if (tribute.getStatus() == TributeStatus.QUIT)
@@ -95,7 +97,9 @@ public class PlayerListener implements Listener
                 tribute.setStatus(TributeStatus.DEAD);
                 player.sendMessage(ChatColor.RED + "You aren't playing");
             }
-        } else if (game.getStatus() == GameStatus.WAITING) {
+        }
+        else if (game.getStatus() == GameStatus.WAITING)
+        {
             Bukkit.getLogger().log(Level.INFO, "Setting player to adventure mode.");
             tribute.setGameMode(GameMode.SURVIVAL);
             tribute.setStatus(TributeStatus.ALIVE);
@@ -134,6 +138,15 @@ public class PlayerListener implements Listener
     public void onPvPDamage(EntityDamageEvent event)
     {
         if (game.getStatus() == GameStatus.WAITING || game.getStatus() == GameStatus.FINISHED)
+        {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event)
+    {
+        if (!frozen)
         {
             event.setCancelled(true);
         }
