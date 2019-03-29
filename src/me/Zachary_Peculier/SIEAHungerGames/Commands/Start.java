@@ -46,6 +46,7 @@ class Timer
                 }
                 else if ((time % 15) == 0 && time > 20 && time < 60)
                 {
+                    game.setFrozen(true);
                     Bukkit.broadcastMessage("Time remaining: " + time);
                 }
                 else if ((time % 10) == 0 && time > 5 && time <= 20)
