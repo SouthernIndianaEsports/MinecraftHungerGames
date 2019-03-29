@@ -52,12 +52,13 @@ public class Game
                 {
                     Chest chest = (Chest) b;
                     Inventory inventory = chest.getBlockInventory();
+                    Random rand = new Random();
                     Material[] randomItens =
-                    { Material.AIR, Material.APPLE, Material.STICK, Material.STONE_SWORD, Material.WOOD_SWORD, Material.STONE_AXE, Material.DIAMOND_PICKAXE, Material.ARROW, Material.BOW };
+                    { Material.AIR, Material.APPLE, Material.GOLD_SWORD, Material.STONE_SWORD, Material.WOOD_SWORD, Material.AIR, Material.STONE_AXE, Material.GOLD_PICKAXE, Material.ARROW, Material.BOW, Material.AIR, Material.AIR };
 
-                    for (int i = 0; i < chest.getInventory().getSize(); i++)
+                    for (int i = 0; i < 10; i++)
                     {
-                        Random rand = new Random();
+                        
 
                         int max = 9;
                         for (int amountOfItems = 0; amountOfItems < max; amountOfItems++)
