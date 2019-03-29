@@ -16,7 +16,7 @@ public class Tribute {
         this.player = new WeakReference<>(player);
         this.uuid = player.getUniqueId();
     }
-    
+
     public Player getPlayer() {
         return player.get();
     }
@@ -24,11 +24,11 @@ public class Tribute {
     public final UUID getUUID() {
         return uuid;
     }
-    
+
     public final String getName() {
         return getPlayer().getName();
     }
-    
+
     public void updatePlayer(Player p) {
         if (!p.equals(player.get())) {
             this.player = new WeakReference<>(p);
@@ -38,11 +38,11 @@ public class Tribute {
     public final TributeStatus getStatus(){
         return status;
     }
-    
+
     public void setStatus(TributeStatus s) {
         this.status = s;
     }
-    
+
     public void setGameMode(GameMode mode) {
         getPlayer().setGameMode(mode);
     }
