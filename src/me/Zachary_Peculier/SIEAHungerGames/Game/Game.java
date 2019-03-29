@@ -59,7 +59,7 @@ public class Game
                     Inventory inventory = chest.getBlockInventory();
                     Random rand = new Random();
                     Material[] randomItens =
-                    { null, Material.APPLE, null, Material.EXP_BOTTLE, Material.GOLD_SWORD, Material.STONE_SWORD, Material.WOOD_SWORD, null, Material.STONE_AXE, Material.GOLD_PICKAXE, Material.ARROW, Material.BOW, null, null };
+                    { null, Material.APPLE, null, Material.EXP_BOTTLE, Material.GOLD_SWORD, Material.WOOD_SWORD, null, Material.STONE_AXE, Material.GOLD_PICKAXE, Material.ARROW, Material.BOW, null, null, Material.STICK, Material.COBBLESTONE, Material.IRON_INGOT };
 
                     for (int i = 0; i < 10; i++)
                     {
