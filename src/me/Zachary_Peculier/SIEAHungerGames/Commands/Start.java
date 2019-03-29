@@ -34,7 +34,7 @@ class Timer
 
                 if (time == times && time > 0)
                 {
-                    Bukkit.broadcastMessage("Time remaining: " + time);
+                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + time + " seconds");
                     time--;
                     return;
                 }
