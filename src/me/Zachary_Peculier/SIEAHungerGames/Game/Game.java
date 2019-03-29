@@ -38,11 +38,11 @@ public class Game
         for (int i = 0; i < tributes.size(); i++) // ensure everyone is set to
                                                   // alive and is in survival
         {
-            if (tributes.get(i).getStatus() == TributeStatus.QUIT) {
+            if (tributes.get(i).getStatus() == TributeStatus.QUIT)
+            {
                 continue;
             }
-            
-            
+
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
 
@@ -58,17 +58,21 @@ public class Game
                     Chest chest = (Chest) b;
                     Inventory inventory = chest.getBlockInventory();
                     Random rand = new Random();
+
                     Material[] randomItens =
                     { Material.APPLE, Material.EXP_BOTTLE, Material.GOLD_SWORD, Material.WOOD_SWORD, Material.STONE_AXE, Material.GOLD_PICKAXE, Material.ARROW, Material.BOW, Material.STICK, Material.COBBLESTONE, Material.IRON_INGOT };
 
                     for (int i = 0; i < 10; i++)
                     {
-                        
 
-                        int max = 9;
-                        for (int amountOfItems = 0; amountOfItems < max; amountOfItems++)
+                        for (int amountOfItems = 0; amountOfItems < 9; amountOfItems++)
                         {
-                            inventory.addItem(new ItemStack(randomItens[rand.nextInt(randomItens.length)]));
+                            double n = Math.random() * 49;
+                            if (n % 2 == 0)
+                            {
+                                inventory.addItem(new ItemStack(randomItens[rand.nextInt(randomItens.length)]));
+                            }
+
                         }
                     }
                 }
@@ -82,10 +86,11 @@ public class Game
         frozen = false;
         for (int i = 0; i < tributes.size(); i++)
         {
-            if (tributes.get(i).getStatus() == TributeStatus.QUIT) {
+            if (tributes.get(i).getStatus() == TributeStatus.QUIT)
+            {
                 continue;
             }
-            
+
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
     }
@@ -186,11 +191,12 @@ public class Game
     public void removePlayer(Player player)
     {
         Tribute tribute = this.getTribute(player);
-        if (tribute == null) {
+        if (tribute == null)
+        {
             Bukkit.getLogger().log(Level.INFO, "Unable to remove player: " + player.getName());
             return;
         }
-        
+
         tribute.setGameMode(GameMode.SPECTATOR);
         tribute.setStatus(TributeStatus.DEAD);
     }
@@ -236,14 +242,16 @@ public class Game
 
     public boolean inGame(Player player)
     {
-        for (int i = 0; i < tributes.size(); i++) {
+        for (int i = 0; i < tributes.size(); i++)
+        {
             final Tribute tribute = tributes.get(i);
-            if (tribute.getUUID().compareTo(player.getUniqueId()) == 0) {
+            if (tribute.getUUID().compareTo(player.getUniqueId()) == 0)
+            {
                 Bukkit.getLogger().log(Level.INFO, "Found player: " + player.getName());
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -263,7 +271,8 @@ public class Game
         for (int i = 0; i < tributes.size(); i++)
         {
             final Tribute tribute = tributes.get(i);
-            if (tribute.getStatus() != TributeStatus.ALIVE) // only list people who are alive
+            if (tribute.getStatus() != TributeStatus.ALIVE) // only list people
+                                                            // who are alive
             {
                 continue;
             }
@@ -273,12 +282,14 @@ public class Game
         player.sendMessage(ChatColor.YELLOW + "" + this.getNumAlive() + ChatColor.DARK_AQUA + " remain");
         player.sendMessage(ChatColor.YELLOW + "" + this.getNumPlayers() + ChatColor.DARK_AQUA + " in total.");
     }
-    
-    public boolean getFrozen(){
+
+    public boolean getFrozen()
+    {
         return frozen;
     }
-    
-    public void setFrozen(boolean f){
+
+    public void setFrozen(boolean f)
+    {
         this.frozen = f;
     }
 }
