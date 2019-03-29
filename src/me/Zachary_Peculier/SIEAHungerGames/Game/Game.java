@@ -17,7 +17,6 @@ import org.bukkit.Chunk;
 
 public class Game
 {
-
     private GameStatus status = GameStatus.WAITING;
     private ArrayList<Tribute> tributes = new ArrayList<Tribute>();
     private ArrayList<Player> admins = new ArrayList<Player>();
@@ -42,7 +41,7 @@ public class Game
                 continue;
             }
             
-            tributes.get(i).setGameMode(GameMode.SURVIVAL);
+            
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
 
@@ -177,7 +176,6 @@ public class Game
     {
         Tribute tribute = new Tribute(player);
         tribute.setStatus(TributeStatus.ALIVE);
-        tribute.setGameMode(GameMode.ADVENTURE);
         tributes.add(tribute);
     }
 

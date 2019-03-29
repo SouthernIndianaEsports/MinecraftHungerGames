@@ -97,7 +97,7 @@ public class PlayerListener implements Listener
             }
         } else if (game.getStatus() == GameStatus.WAITING) {
             Bukkit.getLogger().log(Level.INFO, "Setting player to adventure mode.");
-            tribute.setGameMode(GameMode.ADVENTURE);
+            tribute.setGameMode(GameMode.SURVIVAL);
             tribute.setStatus(TributeStatus.ALIVE);
         }
 
