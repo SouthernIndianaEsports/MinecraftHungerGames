@@ -11,58 +11,82 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.Zachary_Peculier.SIEAHungerGames.HungerGames;
 import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
 
-class Timer extends BukkitRunnable
+class Timer
 {
 
-    int timer = 0;
+    private HungerGames plugin;
     private Game game;
+    private int task = -1;
+    private int time;
 
-    public Timer(Game g, int seconds)
+    public Timer(HungerGames plugin, Game g, long preDelay, long delay, final int times, final Runnable eachDelay, final Runnable end)
     {
         this.game = g;
-        this.timer = seconds;
-    }
+        this.plugin = plugin;
+        time = times;
+        task = plugin.getServer().getScheduler().runTaskTimer(plugin, new Runnable()
+        {
 
-    public void run()
-    {
-        if (timer == -1)
-        {
-            this.cancel();
-            return;
-        }
+            @Override
+            public void run()
+            {
+                if (eachDelay != null)
+                    eachDelay.run();
 
-        if (timer == 0)
-        {
-            game.startGame();
-            game.setFrozen(false);
-            this.cancel();
-            return;
-        }
-        else if (timer > 60 && (timer % 60) == 0)
-        {
-            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + (timer / 60) + " minutes.");
-        }
-        else if (timer == 60)
-        {
-            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
-            game.setFrozen(true);
-        }
-        else if (timer < 60)
-        {
-            if ((timer % 15 == 0) || (timer <= 10))
-            {
-                Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + timer + " seconds.");
-            }
-            else if (timer <= 10)
-            {
-                if (timer == 1)
+                if (time == times && time > 0)
                 {
-                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 second.");
+                    Bukkit.broadcastMessage("Time remaining: " + time);
+                    time--;
+                    return;
+                }
+                
+                if ((time % 30) == 0 && time >= 60)
+                {
+                    Bukkit.broadcastMessage("Time remaining: " + time);
+                }
+                else if ((time % 15) == 0 && time > 20 && time < 60)
+                {
+                    Bukkit.broadcastMessage("Time remaining: " + time);
+                }
+                else if ((time % 10) == 0 && time > 5 && time <= 20)
+                {
+                    Bukkit.broadcastMessage("Time remaining: " + time);
+                }
+                else if (time < 6 && time > 0)
+                {
+                    Bukkit.broadcastMessage("Time remaining: " + time);
+                }
+
+                time--;
+                if (time < 1)
+                {
+                    end();
+                    if (end != null)
+                        end.run();
                 }
             }
-        }
-        timer--;
+        }, preDelay, delay).getTaskId();
     }
+
+    public int getTime()
+    {
+        return time;
+    }
+
+    public boolean isRunning()
+    {
+        return task != -1 && (plugin.getServer().getScheduler().isCurrentlyRunning(task) || plugin.getServer().getScheduler().isQueued(task));
+    }
+
+    public void end()
+    {
+        if (isRunning())
+        {
+            plugin.getServer().getScheduler().cancelTask(task);
+            task = -1;
+        }
+    }
+
 }
 
 public class Start implements CommandExecutor
@@ -100,11 +124,10 @@ public class Start implements CommandExecutor
             return true;
         }
 
-        if (game.getNumPlayers() < 2)
-        {
-            player.sendMessage(ChatColor.RED + "There must be at least 2 players to start the game.");
-            return true;
-        }
+        /*
+         * if (game.getNumPlayers() < 2) { player.sendMessage(ChatColor.RED +
+         * "There must be at least 2 players to start the game."); return true; }
+         */
 
         if (args.length != 1)
         {
@@ -129,8 +152,15 @@ public class Start implements CommandExecutor
                     player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":0" + seconds + " started!");
                 }
                 game.startTimer();
-                Timer timer = new Timer(game, time);
-                timer.runTaskTimer(this.plugin, 0, 20 * time);
+                Timer timer = new Timer(this.plugin, game, 0, 20, time, null, new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        game.startGame();
+                        game.setFrozen(false);
+                    }
+                });
                 return true;
             }
         }
