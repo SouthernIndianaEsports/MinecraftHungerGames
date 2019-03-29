@@ -10,7 +10,7 @@ import org.bukkit.ChatColor;
 public class Game
 {
 
-    private GameStatus status = GameStatus.DISABLED;
+    private GameStatus status = GameStatus.WAITING;
     private ArrayList<Tribute> tributes = new ArrayList<Tribute>();
     private ArrayList<Player> admins = new ArrayList<Player>();
 
