@@ -6,9 +6,64 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import me.Zachary_Peculier.SIEAHungerGames.HungerGames;
 import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
+
+class Timer extends BukkitRunnable
+{
+
+    int timer = 0;
+    private Game game;
+
+    public Timer(Game g, int seconds)
+    {
+        this.game = g;
+        this.timer = seconds;
+    }
+
+    public void run()
+    {
+        if (timer == -1)
+        {
+            this.cancel();
+            return;
+        }
+
+        if (timer == 0)
+        {
+            game.startGame();
+            game.setFrozen(false);
+            this.cancel();
+            return;
+        }
+        else if (timer > 60 && (timer % 60) == 0)
+        {
+            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + (timer / 60) + " minutes.");
+        }
+        else if (timer == 60)
+        {
+            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
+            game.setFrozen(true);
+        }
+        else if (timer < 60)
+        {
+            if ((timer % 15 == 0) || (timer <= 10))
+            {
+                Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + timer + " seconds.");
+            }
+            else if (timer <= 10)
+            {
+                if (timer == 1)
+                {
+                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 second.");
+                }
+            }
+        }
+        timer--;
+    }
+}
 
 public class Start implements CommandExecutor
 {
@@ -34,7 +89,6 @@ public class Start implements CommandExecutor
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
     {
@@ -75,48 +129,8 @@ public class Start implements CommandExecutor
                     player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":0" + seconds + " started!");
                 }
                 game.startTimer();
-                Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(this.plugin, new Runnable()
-                {
-                    int timer = time;
-
-                    public void run()
-                    {
-                        if (timer == -1)
-                        {
-                            return;
-                        }
-
-                        if (timer == 0)
-                        {
-                            game.startGame();
-                            game.setFrozen(false);
-                        }
-                        else if (timer > 60 && (timer % 60) == 0)
-                        {
-                            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + (timer / 60) + " minutes.");
-                        }
-                        else if (timer == 60)
-                        {
-                            Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
-                            game.setFrozen(true);
-                        }
-                        else if (timer < 60)
-                        {
-                            if ((timer % 15 == 0) || (timer <= 10))
-                            {
-                                Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + timer + " seconds.");
-                            }
-                            else if (timer <= 10)
-                            {
-                                if (timer == 1)
-                                {
-                                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 second.");
-                                }
-                            }
-                        }
-                        timer--;
-                    }
-                }, 0L, 20L);
+                Timer timer = new Timer(game, time);
+                timer.runTaskTimer(this.plugin, 0, 20 * time);
                 return true;
             }
         }
