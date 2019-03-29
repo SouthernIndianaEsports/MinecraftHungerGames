@@ -97,7 +97,7 @@ public class Start implements CommandExecutor
                         else if (timer == 60)
                         {
                             Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in 1 minute.");
-                            
+                            game.setFrozen(true);
                         }
                         else if (timer < 60)
                         {
