@@ -2,11 +2,18 @@ package me.Zachary_Peculier.SIEAHungerGames.Game;
 
 import java.util.ArrayList;
 import java.util.logging.*;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 
 public class Game
 {
@@ -40,6 +47,33 @@ public class Game
         }
 
         Bukkit.getWorld("world").setTime(0);
+        for (Chunk c : Bukkit.getWorld("world").getLoadedChunks())
+        {
+
+            for (BlockState b : c.getTileEntities())
+            {
+
+                if (b instanceof Chest)
+                {
+                    Chest chest = (Chest) b;
+                    Inventory inventory = chest.getBlockInventory();
+                    Random rand = new Random();
+                    Material[] randomItens =
+                    { Material.AIR, Material.APPLE, Material.AIR, Material.EXP_BOTTLE, Material.GOLD_SWORD, Material.STONE_SWORD, Material.WOOD_SWORD, Material.AIR, Material.STONE_AXE, Material.GOLD_PICKAXE, Material.ARROW, Material.BOW, Material.AIR, Material.AIR };
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        
+
+                        int max = 9;
+                        for (int amountOfItems = 0; amountOfItems < max; amountOfItems++)
+                        {
+                            inventory.addItem(new ItemStack(randomItens[rand.nextInt(randomItens.length)]));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void startTimer()
