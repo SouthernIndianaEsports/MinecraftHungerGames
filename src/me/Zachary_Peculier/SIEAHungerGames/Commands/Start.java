@@ -41,20 +41,20 @@ class Timer
 
                 if ((time % 30) == 0 && time >= 60)
                 {
-                    Bukkit.broadcastMessage("Time remaining: " + time);
+                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + time + " seconds");
                 }
                 else if ((time % 15) == 0 && time > 20 && time < 60)
                 {
                     game.setFrozen(true);
-                    Bukkit.broadcastMessage("Time remaining: " + time);
+                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + time + " seconds");
                 }
                 else if ((time % 10) == 0 && time > 5 && time <= 20)
                 {
-                    Bukkit.broadcastMessage("Time remaining: " + time);
+                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + time + " seconds");
                 }
                 else if (time < 6 && time > 0)
                 {
-                    Bukkit.broadcastMessage("Time remaining: " + time);
+                    Bukkit.broadcastMessage(ChatColor.RED + "Tournament will begin in " + time + " seconds");
                 }
 
                 time--;
@@ -143,14 +143,9 @@ public class Start implements CommandExecutor
             int seconds = time % 60;
             int minutes = time / 60;
             
-            if (seconds >= 10)
-            {
-                player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
-            }
-            else
-            {
-                player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":0" + seconds + " started!");
-            }
+
+            player.sendMessage(ChatColor.GREEN + "Timer for "  + time + " seconds started!");
+
 
             game.startTimer();
 
