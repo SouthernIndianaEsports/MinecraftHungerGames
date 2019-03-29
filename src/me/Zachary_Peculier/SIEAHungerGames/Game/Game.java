@@ -186,8 +186,12 @@ public class Game
     {
         for (int i = 0; i != tributes.size(); i++)
         {
+            final Tribute tribute = tributes.get(i);
+            if (tribute.getStatus() != TributeStatus.ALIVE) { //only list people who are alive
+                continue;
+            }
             int num = i + 1;
-            player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + num + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + tributes.get(i).getName());
+            player.sendMessage(ChatColor.DARK_AQUA + "[" + ChatColor.YELLOW + num + ChatColor.DARK_AQUA + "] " + ChatColor.YELLOW + tribute.getName());
         }
         player.sendMessage(ChatColor.YELLOW + "" + this.getNumAlive() + ChatColor.DARK_AQUA + " remain");
     }
