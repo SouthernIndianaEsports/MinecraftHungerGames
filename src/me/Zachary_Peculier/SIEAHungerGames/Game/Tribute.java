@@ -33,11 +33,11 @@ public class Tribute {
     }
     
     public void setStatus(TributeStatus s) {
-        status = s;
+        this.status = s;
     }
     
     public void setGameMode(GameMode mode) {
-        player.setGameMode(mode);
+        this.player.setGameMode(mode);
     }
 
 }

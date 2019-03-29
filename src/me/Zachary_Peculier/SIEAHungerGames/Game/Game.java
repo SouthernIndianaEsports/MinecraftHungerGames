@@ -1,6 +1,7 @@
 package me.Zachary_Peculier.SIEAHungerGames.Game;
 
 import java.util.ArrayList;
+import java.util.logging.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -30,6 +31,10 @@ public class Game
         for (int i = 0; i < tributes.size(); i++) // ensure everyone is set to
                                                   // alive and is in survival
         {
+            if (tributes.get(i).getStatus() == TributeStatus.QUIT) {
+                continue;
+            }
+            
             tributes.get(i).setGameMode(GameMode.SURVIVAL);
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
@@ -43,6 +48,10 @@ public class Game
 
         for (int i = 0; i < tributes.size(); i++)
         {
+            if (tributes.get(i).getStatus() == TributeStatus.QUIT) {
+                continue;
+            }
+            
             tributes.get(i).setGameMode(GameMode.ADVENTURE);
             tributes.get(i).setStatus(TributeStatus.ALIVE);
         }
@@ -75,8 +84,9 @@ public class Game
         for (int i = 0; i < tributes.size(); i++)
         {
             Tribute tribute = tributes.get(i);
-            if (tribute.getPlayer() == player)
+            if (tribute.getUUID().compareTo(player.getUniqueId()) == 0)
             {
+                Bukkit.getLogger().log(Level.INFO, "Found player: " + player.getName());
                 return tribute;
             }
         }
@@ -110,6 +120,7 @@ public class Game
         Tribute tribute = this.getTribute(player);
         if (tribute == null)
         {
+            Bukkit.getLogger().log(Level.INFO, "Could not find player: " + player.getName());
             return;
         }
 
@@ -121,6 +132,7 @@ public class Game
         Tribute tribute = this.getTribute(player);
         if (tribute == null)
         {
+            Bukkit.getLogger().log(Level.INFO, "Could not find player: " + player.getName());
             return;
         }
 
@@ -140,14 +152,14 @@ public class Game
      */
     public void removePlayer(Player player)
     {
-        for (int i = 0; i < tributes.size(); i++)
-        {
-            if (tributes.get(i).getPlayer() == player)
-            {
-                tributes.get(i).setStatus(TributeStatus.DEAD);
-                tributes.get(i).setGameMode(GameMode.SPECTATOR);
-            }
+        Tribute tribute = this.getTribute(player);
+        if (tribute == null) {
+            Bukkit.getLogger().log(Level.INFO, "Unable to remove player: " + player.getName());
+            return;
         }
+        
+        tribute.setGameMode(GameMode.SPECTATOR);
+        tribute.setStatus(TributeStatus.DEAD);
     }
 
     /*
@@ -191,7 +203,15 @@ public class Game
 
     public boolean inGame(Player player)
     {
-        return getTribute(player) != null;
+        for (int i = 0; i < tributes.size(); i++) {
+            final Tribute tribute = tributes.get(i);
+            if (tribute.getUUID().compareTo(player.getUniqueId()) == 0) {
+                Bukkit.getLogger().log(Level.INFO, "Found player: " + player.getName());
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     public boolean isPlayerAlive(Player player)
@@ -207,11 +227,11 @@ public class Game
 
     public void listPlayers(Player player)
     {
-        for (int i = 0; i != tributes.size(); i++)
+        for (int i = 0; i < tributes.size(); i++)
         {
             final Tribute tribute = tributes.get(i);
-            if (tribute.getStatus() != TributeStatus.ALIVE)
-            { // only list people who are alive
+            if (tribute.getStatus() != TributeStatus.ALIVE) // only list people who are alive
+            {
                 continue;
             }
             int num = i + 1;

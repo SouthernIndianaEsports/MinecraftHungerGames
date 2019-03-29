@@ -1,5 +1,6 @@
 package me.Zachary_Peculier.SIEAHungerGames.Listeners;
 
+import java.util.logging.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -65,16 +66,15 @@ public class PlayerListener implements Listener
         if (!game.inGame(player))
         {
             game.addPlayer(player);
-            if (game.getStatus() == GameStatus.STARTED)
-            {
-                Tribute t = game.getTribute(player);
-                t.setStatus(TributeStatus.DEAD);
-                player.setGameMode(GameMode.SPECTATOR);
-            }
+            Bukkit.getLogger().log(Level.INFO, "Added " + player.getName() + " to game.");
         }
 
         Tribute tribute = game.getTribute(player);
-
+        if (tribute == null) {
+            Bukkit.getLogger().log(Level.INFO, "Could not find " + player.getName() + ", this shoudln't happen");
+            return;
+        }
+        
         if (game.getStatus() == GameStatus.STARTED)
         {
             if (tribute.getStatus() == TributeStatus.QUIT)
@@ -93,6 +93,10 @@ public class PlayerListener implements Listener
                 tribute.setStatus(TributeStatus.DEAD);
                 player.sendMessage(ChatColor.RED + "You aren't playing");
             }
+        } else if (game.getStatus() == GameStatus.WAITING) {
+            Bukkit.getLogger().log(Level.INFO, "Setting player to adventure mode.");
+            player.setGameMode(GameMode.ADVENTURE);
+            tribute.setStatus(TributeStatus.ALIVE);
         }
 
     }
@@ -111,6 +115,7 @@ public class PlayerListener implements Listener
         }
 
         game.removePlayer(player);
+        game.setPlayerStatus(player, TributeStatus.QUIT);
     }
 
     @EventHandler
