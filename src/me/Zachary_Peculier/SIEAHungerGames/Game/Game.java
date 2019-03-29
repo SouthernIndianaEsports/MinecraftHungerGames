@@ -30,7 +30,7 @@ public class Game
     public void startGame()
     {
         status = GameStatus.STARTED;
-
+        frozen = false;
         Bukkit.broadcastMessage(ChatColor.RED + "Go!");
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes.size() + ChatColor.DARK_AQUA + " paricipants");
