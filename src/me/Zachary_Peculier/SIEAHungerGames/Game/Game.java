@@ -176,6 +176,7 @@ public class Game
     {
         Tribute tribute = new Tribute(player);
         tribute.setStatus(TributeStatus.ALIVE);
+        player.setGameMode(GameMode.SURVIVAL);
         tributes.add(tribute);
     }
 
