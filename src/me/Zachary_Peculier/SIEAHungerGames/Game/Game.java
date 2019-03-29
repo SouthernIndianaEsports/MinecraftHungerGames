@@ -68,7 +68,7 @@ public class Game
                         for (int amountOfItems = 0; amountOfItems < 9; amountOfItems++)
                         {
                             int n = (int) (Math.random() * 49);
-                            if (n % 2 == 0)
+                            if (n % 5 == 0)
                             {
                                 inventory.addItem(new ItemStack(randomItens[rand.nextInt(randomItens.length)]));
                             }
