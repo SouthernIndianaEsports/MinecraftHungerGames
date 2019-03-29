@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import me.Zachary_Peculier.SIEAHungerGames.HungerGames;
 import me.Zachary_Peculier.SIEAHungerGames.Game.Game;
@@ -131,44 +130,41 @@ public class Start implements CommandExecutor
             return true;
         }
 
-        if (args.length != 1)
+        if (args.length != 1 || !isInt(args[0]))
         {
             player.sendMessage(ChatColor.RED + "Usage: /start <time in seconds>");
             return true;
         }
 
-        if (isInt(args[0]))
-        {
-            int time = Integer.parseInt(args[0]);
+        int time = Integer.parseInt(args[0]);
 
-            if (time > 0)
-            {
-                int seconds = time % 60;
-                int minutes = time / 60;
-                if (seconds >= 10)
-                {
-                    player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
-                }
-                else
-                {
-                    player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":0" + seconds + " started!");
-                }
-                game.startTimer();
-                Timer timer = new Timer(this.plugin, game, 0, 20, time, null, new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        game.startGame();
-                        game.setFrozen(false);
-                    }
-                });
-                return true;
-            }
-        }
-        else
+        if (time > 0)
         {
-            player.sendMessage(ChatColor.RED + "Please enter a whole number");
+            int seconds = time % 60;
+            int minutes = time / 60;
+            
+            if (seconds >= 10)
+            {
+                player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":" + seconds + " started!");
+            }
+            else
+            {
+                player.sendMessage(ChatColor.GREEN + "Timer for " + minutes + ":0" + seconds + " started!");
+            }
+
+            game.startTimer();
+
+            Timer timer = new Timer(this.plugin, game, 0, 20, time, null, new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    game.startGame();
+                    game.setFrozen(false);
+                }
+            });
+
+            return true;
         }
         return true;
     }

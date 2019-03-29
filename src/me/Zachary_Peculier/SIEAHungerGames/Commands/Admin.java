@@ -28,9 +28,10 @@ public class Admin implements CommandExecutor
             player.sendMessage(ChatColor.RED + "No Permission!");
             return true;
         }
-        
+
         game.addAdmin(player);
         game.deletePlayer(player);
+        player.sendMessage(ChatColor.DARK_RED + "You have been removed from the game.");
 
         return true;
     }

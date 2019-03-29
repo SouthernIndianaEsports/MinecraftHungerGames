@@ -29,22 +29,12 @@ public class Game
 
     public void startGame()
     {
-        status = GameStatus.STARTED;
-        frozen = false;
+        this.status = GameStatus.STARTED;
+        this.frozen = false;
+        
         Bukkit.broadcastMessage(ChatColor.RED + "Go!");
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "Good luck, and may the odds be ever in your favor");
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes.size() + ChatColor.DARK_AQUA + " paricipants");
-
-        for (int i = 0; i < tributes.size(); i++) // ensure everyone is set to
-                                                  // alive and is in survival
-        {
-            if (tributes.get(i).getStatus() == TributeStatus.QUIT)
-            {
-                continue;
-            }
-
-            tributes.get(i).setStatus(TributeStatus.ALIVE);
-        }
 
         Bukkit.getWorld("world").setTime(0);
         for (Chunk c : Bukkit.getWorld("world").getLoadedChunks())
@@ -82,17 +72,7 @@ public class Game
 
     public void startTimer()
     {
-        status = GameStatus.WAITING;
-        frozen = false;
-        for (int i = 0; i < tributes.size(); i++)
-        {
-            if (tributes.get(i).getStatus() == TributeStatus.QUIT)
-            {
-                continue;
-            }
-
-            tributes.get(i).setStatus(TributeStatus.ALIVE);
-        }
+        this.status = GameStatus.WAITING;
     }
 
     public void end()
@@ -100,8 +80,8 @@ public class Game
         status = GameStatus.FINISHED;
 
         Tribute tribute = null;
-        for (int i = 0; i < tributes.size(); i++)
-        { // find the last alive player
+        for (int i = 0; i < tributes.size(); i++) // find the last alive player
+        {
             Tribute t = tributes.get(i);
             if (t.getStatus() == TributeStatus.ALIVE)
             {
@@ -223,15 +203,7 @@ public class Game
 
     public boolean isAdmin(Player player)
     {
-        for (int i = 0; i < admins.size(); i++)
-        {
-            if (admins.get(i) == player)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return admins.contains(player);
     }
 
     public void removeAdmin(Player player)
@@ -242,17 +214,7 @@ public class Game
 
     public boolean inGame(Player player)
     {
-        for (int i = 0; i < tributes.size(); i++)
-        {
-            final Tribute tribute = tributes.get(i);
-            if (tribute.getUUID().compareTo(player.getUniqueId()) == 0)
-            {
-                Bukkit.getLogger().log(Level.INFO, "Found player: " + player.getName());
-                return true;
-            }
-        }
-
-        return false;
+        return this.getTribute(player) != null;
     }
 
     public boolean isPlayerAlive(Player player)
