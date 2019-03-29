@@ -145,7 +145,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event)
     {
-        if (game.getFrozen())
+        if (game.getFrozen() && !game.isAdmin(event.getPlayer()))
         {
             event.setCancelled(true);
         }
