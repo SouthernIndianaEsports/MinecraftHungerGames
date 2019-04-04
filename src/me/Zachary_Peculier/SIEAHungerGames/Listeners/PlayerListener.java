@@ -4,8 +4,6 @@ import java.util.logging.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -99,7 +97,7 @@ public class PlayerListener implements Listener
         }
         else if (game.getStatus() == GameStatus.WAITING)
         {
-            Bukkit.getLogger().log(Level.INFO, "Setting player to adventure mode.");
+            Bukkit.getLogger().log(Level.INFO, "Setting player to survivor mode.");
             tribute.setGameMode(GameMode.SURVIVAL);
             tribute.setStatus(TributeStatus.ALIVE);
         }
@@ -126,8 +124,7 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
     {
-        Block block = event.getBlock();
-        if ((block.getType() == Material.GLASS || game.getStatus() == GameStatus.WAITING))
+        if (game.getStatus() == GameStatus.WAITING || game.getStatus() == GameStatus.FINISHED)
         {
             if (!game.isAdmin(event.getPlayer()))
             {
