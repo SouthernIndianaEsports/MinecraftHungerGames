@@ -113,6 +113,7 @@ public class Start implements CommandExecutor
         }
     }
 
+    @SuppressWarnings("unused")
     @Override
     public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args)
     {
@@ -140,16 +141,13 @@ public class Start implements CommandExecutor
 
         if (time > 0)
         {
-            int seconds = time % 60;
-            int minutes = time / 60;
             
-
             player.sendMessage(ChatColor.GREEN + "Timer for "  + time + " seconds started!");
 
 
             game.startTimer();
 
-            Timer timer = new Timer(this.plugin, game, 0, 20, time, null, new Runnable()
+           Timer timer = new Timer(this.plugin, game, 0, 20, time, null, new Runnable()
             {
                 @Override
                 public void run()
