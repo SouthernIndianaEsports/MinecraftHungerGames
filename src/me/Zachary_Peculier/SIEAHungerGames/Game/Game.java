@@ -37,7 +37,7 @@ public class Game
         Bukkit.broadcastMessage(ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + tributes.size() + ChatColor.DARK_AQUA + " paricipants");
 
         Bukkit.getWorld("world").setTime(0);
-        for (Chunk c : Bukkit.getWorld("world").getLoadedChunks())
+        /*for (Chunk c : Bukkit.getWorld("world").getLoadedChunks())
         {
 
             for (BlockState b : c.getTileEntities())
@@ -67,7 +67,7 @@ public class Game
                     }
                 }
             }
-        }
+        }*/
     }
 
     public void startTimer()
@@ -233,8 +233,8 @@ public class Game
         for (int i = 0; i < tributes.size(); i++)
         {
             final Tribute tribute = tributes.get(i);
-            if (tribute.getStatus() != TributeStatus.ALIVE) // only list people
-                                                            // who are alive
+            if (tribute.getStatus() != TributeStatus.ALIVE) // only list people who are alive
+                                                            
             {
                 continue;
             }

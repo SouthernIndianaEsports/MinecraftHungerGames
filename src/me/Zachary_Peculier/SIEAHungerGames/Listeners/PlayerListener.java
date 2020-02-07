@@ -124,13 +124,10 @@ public class PlayerListener implements Listener
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event)
     {
-        if (game.getStatus() == GameStatus.WAITING || game.getStatus() == GameStatus.FINISHED)
-        {
             if (!game.isAdmin(event.getPlayer()))
             {
                 event.setCancelled(true);
             }
-        }
     }
 
     @EventHandler
