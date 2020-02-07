@@ -6,10 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/zacha/Desktop/Games/MC Server/BukkitAPI.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/zacha/Desktop/Games/MC Server/Bukkit/craftbukkit.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
